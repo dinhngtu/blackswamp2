@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tudinh.xyz/article.schema.yaml",
+  "title": "Article",
+  "description": "tudinh.xyz article",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Author": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "string"
+    },
+    "Privacy": {
+      "$ref": "#/definitions/articlePrivacy"
+    },
+    "Sections": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/markdownSection"
+          },
+          {
+            "$ref": "#/definitions/youtubeSection"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "id",
+    "Sections"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "section": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Privacy": {
+          "$ref": "#/definitions/sectionPrivacy"
+        }
+      },
+      "additionalProperties": false
+    },
+    "markdownSection": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/section"
+        },
+        {
+          "properties": {
+            "Markdown": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "Markdown"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "youtubeSection": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/section"
+        },
+        {
+          "properties": {
+            "YoutubeId": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9-_]{11}"
+            },
+            "Title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "YoutubeId"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "articlePrivacy": {
+      "type": "string",
+      "enum": [
+        "Public",
+        "Mixed",
+        "Private",
+        "Hidden"
+      ]
+    },
+    "sectionPrivacy": {
+      "type": "string",
+      "enum": [
+        "Public",
+        "Private"
+      ]
+    }
+  }
+}
