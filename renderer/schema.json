@@ -17,6 +17,12 @@
     "Description": {
       "type": "string"
     },
+    "Modules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/module"
+      }
+    },
     "Privacy": {
       "$ref": "#/definitions/articlePrivacy"
     },
@@ -106,6 +112,12 @@
       "enum": [
         "Public",
         "Private"
+      ]
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "Hydratable"
       ]
     }
   }
