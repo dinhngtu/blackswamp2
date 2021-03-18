@@ -18,8 +18,12 @@ gulp.task("articles", gulp.series([
       schema: JSON.parse(fs.readFileSync("renderer/schema.json").toString()),
     }))
     .pipe(gulp.dest("public/articles/")),
-  () => gulp.src("public/articles/index.html")
-    .pipe(gulp.dest("public/")),
+  gulp.parallel([
+    () => gulp.src("public/articles/index.html")
+      .pipe(gulp.dest("public/")),
+    () => gulp.src("public/articles/404.html")
+      .pipe(gulp.dest("public/")),
+  ])
 ]));
 
 gulp.task("articles-json", () =>
