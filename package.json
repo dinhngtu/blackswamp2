@@ -4,7 +4,8 @@
   "license": "Proprietary",
   "private": true,
   "scripts": {
-    "build": "gulp --require tsconfig-paths/register && rollup -c"
+    "build": "gulp --require tsconfig-paths/register && rollup -c",
+    "serve": "http-server"
   },
   "dependencies": {
     "dompurify": "^2.2.7",

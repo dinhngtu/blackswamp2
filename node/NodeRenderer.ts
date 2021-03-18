@@ -12,10 +12,6 @@ export interface RenderOptions {
   stream?: boolean;
 }
 
-function isReadable(chunk: any): chunk is Readable {
-  return typeof chunk._read === "function";
-}
-
 function render(options: RenderOptions, article: Article): NodeJS.ReadableStream | string | null {
   const el = options.component({ article });
   if (el === null || el === undefined) {
