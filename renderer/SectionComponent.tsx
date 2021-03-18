@@ -1,16 +1,7 @@
 import React from "react";
 import marked from "marked";
-import DOMPurify from "dompurify";
-import { JSDOM } from "jsdom";
+import purifier from "purifier";
 import { MarkdownSection, Section, YoutubeSection } from "./Article";
-
-let purifier: DOMPurify.DOMPurifyI;
-if (typeof window !== "undefined") {
-  purifier = DOMPurify(window);
-} else {
-  const { window } = new JSDOM();
-  purifier = DOMPurify(window as unknown as Window);
-}
 
 function isMarkdownSection(s: Section): s is MarkdownSection {
   return (s as MarkdownSection).Markdown !== undefined;

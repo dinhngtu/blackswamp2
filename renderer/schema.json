@@ -5,6 +5,10 @@
   "description": "tudinh.xyz article",
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://tudinh.xyz/article.schema.yaml"
+    },
     "id": {
       "type": "string"
     },
@@ -55,48 +59,49 @@
         "Privacy": {
           "$ref": "#/definitions/sectionPrivacy"
         }
-      },
-      "additionalProperties": false
+      }
     },
     "markdownSection": {
+      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/section"
-        },
-        {
-          "properties": {
-            "Markdown": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "Markdown"
-          ],
-          "additionalProperties": false
         }
-      ]
+      ],
+      "properties": {
+        "Markdown": {
+          "type": "string"
+        },
+        "Name": {},
+        "Privacy": {}
+      },
+      "required": [
+        "Markdown"
+      ],
+      "additionalProperties": false
     },
     "youtubeSection": {
+      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/section"
-        },
-        {
-          "properties": {
-            "YoutubeId": {
-              "type": "string",
-              "pattern": "^[a-zA-Z0-9-_]{11}"
-            },
-            "Title": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "YoutubeId"
-          ],
-          "additionalProperties": false
         }
-      ]
+      ],
+      "properties": {
+        "YoutubeId": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9-_]{11}"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Name": {},
+        "Privacy": {}
+      },
+      "required": [
+        "YoutubeId"
+      ],
+      "additionalProperties": false
     },
     "articlePrivacy": {
       "type": "string",
@@ -115,9 +120,16 @@
       ]
     },
     "module": {
-      "type": "string",
-      "enum": [
-        "Hydratable"
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Dynamic"
+          ]
+        },
+        {
+          "type": "string"
+        }
       ]
     }
   }
