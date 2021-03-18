@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "baseUrl": ".",
+    "target": "ES5",
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -10,10 +11,16 @@
     "jsx": "react",
     "removeComments": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "purifier": [
+        "node/purifier.ts"
+      ]
+    }
   },
   "include": [
-    "renderer/**/*"
+    "renderer/**/*",
+    "node/**/*"
   ],
   "exclude": [
     "node_modules"

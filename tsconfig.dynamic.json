@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES6",
     "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
+      "DOM"
     ],
-    "module": "CommonJS",
+    "module": "ES6",
     "jsx": "react",
     "removeComments": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "purifier": [
+        "renderer/purifier.ts"
+      ]
+    }
   },
   "include": [
-    "renderer/**/*",
-    "static/**/*"
+    "renderer/**/*"
   ],
   "exclude": [
     "node_modules"

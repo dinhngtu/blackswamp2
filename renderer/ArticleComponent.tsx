@@ -2,32 +2,54 @@ import React from "react";
 import { Article, Section } from "./Article";
 import SectionComponent from "./SectionComponent";
 
-function isArticlePrivate(art: Article) {
-  const effectivePrivacy = art.Privacy ?? "Mixed";
-  return effectivePrivacy === "Private" || effectivePrivacy === "Hidden";
+export function articleEffectivePrivacy(art: Article) {
+  return art.Privacy ?? "Mixed"
 }
 
-function isSectionPrivate(s: Section) {
-  const effectivePrivacy = s.Privacy ?? "Public";
-  return effectivePrivacy === "Private";
+export function isArticlePrivate(art: Article) {
+  const ap = articleEffectivePrivacy(art);
+  return ap === "Private" || ap === "Hidden";
 }
 
-export default function ArticleComponent(art: Article) {
+export function sectionEffectivePrivacy(s: Section) {
+  return s.Privacy ?? "Public";
+}
+
+export function isSectionPrivate(s: Section) {
+  const sp = sectionEffectivePrivacy(s);
+  return sp === "Private";
+}
+
+export function isSectionViewable(art: Article, s: Section, priv: boolean) {
+  const ap = articleEffectivePrivacy(art);
+  const sp = sectionEffectivePrivacy(s);
+  return priv || ap === "Public" || (ap === "Mixed" && sp === "Public");
+}
+
+export default function ArticleComponent(props: { article?: Article, priv?: boolean }) {
+  if (props.article === undefined) {
+    return <React.Fragment />;
+  }
   return (
-    <article className={isArticlePrivate(art) ? "private" : undefined} >
+    <article className={isArticlePrivate(props.article) ? "private" : undefined} >
       <header>
-        {art.Title && <h1>{art.Title}</h1>}
+        {props.article.Title && <h1>{props.article.Title}</h1>}
         <address>
-          {art.Author && <span>by {art.Author}</span>}
+          {props.article.Author && <span>by {props.article.Author}</span>}
         </address>
       </header>
 
-      {art.Sections.map(s => {
-        return (
-          <section id={s.Name} className={(!isArticlePrivate(art) && isSectionPrivate(s)) ? "private" : undefined}>
-            <SectionComponent {...s} />
-          </section>
-        );
+      {props.article.Sections.map((s, i) => {
+        if (isSectionViewable(props.article!, s, props.priv ?? false)) {
+          const secIsPrivate = !isArticlePrivate(props.article!) && isSectionPrivate(s);
+          return (
+            <section key={i} id={s.Name} className={secIsPrivate ? "private" : undefined}>
+              <SectionComponent {...s} />
+            </section>
+          );
+        } else {
+          return <React.Fragment />;
+        }
       })}
     </article >
   );
