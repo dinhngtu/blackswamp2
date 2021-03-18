@@ -1,5 +1,5 @@
 import * as gulp from "gulp";
- import * as json2ts from "json-schema-to-typescript";
+import * as json2ts from "json-schema-to-typescript";
 import * as fs from "fs";
 import del from "del";
 import cleanCSS from "gulp-clean-css";
@@ -11,13 +11,16 @@ gulp.task("schema", () =>
     .compileFromFile("renderer/schema.json")
     .then(x => fs.promises.writeFile("renderer/Article.ts", x)));
 
-gulp.task("articles", () =>
-  gulp.src("articles/*.yaml")
+gulp.task("articles", gulp.series([
+  () => gulp.src("articles/*.yaml")
     .pipe(renderYAML({
       component: PageComponent,
       schema: JSON.parse(fs.readFileSync("renderer/schema.json").toString()),
     }))
-    .pipe(gulp.dest("public/articles/")));
+    .pipe(gulp.dest("public/articles/")),
+  () => gulp.src("public/articles/index.html")
+    .pipe(gulp.dest("public/")),
+]));
 
 gulp.task("articles-json", () =>
   gulp.src("articles/*.yaml")
