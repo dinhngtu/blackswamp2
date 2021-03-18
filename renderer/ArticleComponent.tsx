@@ -31,7 +31,7 @@ export default function ArticleComponent(props: { article?: Article, priv?: bool
     return <Fragment />;
   }
   return (
-    <article className={isArticlePrivate(props.article) ? "private" : undefined} >
+    <article className={isArticlePrivate(props.article) ? "private" : undefined}>
       <header>
         {props.article.Title && <h1>{props.article.Title}</h1>}
         <address>
