@@ -39,7 +39,7 @@ export default function ArticleComponent(props: { article?: Article, priv?: bool
         </address>
       </header>
 
-      {props.article.Sections.map((s, i) => {
+      {props.article.Sections?.map((s, i) => {
         if (isSectionViewable(props.article!, s, props.priv ?? false)) {
           const secIsPrivate = !isArticlePrivate(props.article!) && isSectionPrivate(s);
           return (
