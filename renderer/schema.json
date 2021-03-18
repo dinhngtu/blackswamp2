@@ -45,8 +45,7 @@
     }
   },
   "required": [
-    "id",
-    "Sections"
+    "id"
   ],
   "additionalProperties": false,
   "definitions": {
