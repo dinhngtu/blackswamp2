@@ -8,7 +8,8 @@
       "ESNext"
     ],
     "module": "CommonJS",
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "removeComments": true,
     "strict": true,
     "esModuleInterop": true,

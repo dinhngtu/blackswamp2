@@ -1,31 +1,23 @@
 import YAML from "yaml";
-import { Transform, Readable } from "stream";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
+import { Transform } from "stream";
+import { VNode, h } from "preact";
+import { render } from "preact-render-to-string";
 import Vinyl from "vinyl";
 import Ajv, { JSONSchemaType } from "ajv";
 import { Article } from "../renderer/Article";
 
 export interface RenderOptions {
-  component: React.FC<{ article: Article }>;
+  component: (props: { article: Article }) => VNode;
   schema: JSONSchemaType<Article>;
   stream?: boolean;
 }
 
-function render(options: RenderOptions, article: Article): NodeJS.ReadableStream | string | null {
-  const el = options.component({ article });
+function renderArticle(options: RenderOptions, article: Article): NodeJS.ReadableStream | string | null {
+  const el = h(options.component, { article });
   if (el === null || el === undefined) {
     return null;
   }
-  if (options.stream) {
-    return article.Modules?.includes("Dynamic") ?
-      ReactDOMServer.renderToNodeStream(el) :
-      ReactDOMServer.renderToStaticNodeStream(el);
-  } else {
-    return article.Modules?.includes("Dynamic") ?
-      ReactDOMServer.renderToString(el) :
-      ReactDOMServer.renderToStaticMarkup(el);
-  }
+  return render(el);
 }
 
 export function yamlToJSON() {
@@ -83,7 +75,7 @@ export function renderYAML(options: RenderOptions) {
         return;
       }
 
-      let dom = render(options, obj);
+      let dom = renderArticle(options, obj);
       if (typeof dom !== "string") {
         cb(Error("cannot render"));
         return;

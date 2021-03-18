@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "preact";
 import marked from "marked";
 import purifier from "purifier";
 import { MarkdownSection, Section, YoutubeSection } from "./Article";
@@ -29,7 +29,6 @@ function YoutubeSectionComponent(s: YoutubeSection) {
             className="embed-youtube"
             src={`https://www.youtube.com/embed/${safeYtid}`}
             frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen>
           </iframe>
         </div>
@@ -44,6 +43,6 @@ export default function SectionComponent(s: Section) {
   } else if (isYoutubeSection(s)) {
     return YoutubeSectionComponent(s);
   } else {
-    return <React.Fragment />;
+    return <Fragment />;
   }
 }

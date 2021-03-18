@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "preact";
 import ArticleComponent from "./ArticleComponent";
 
 (async () => {
@@ -10,5 +9,10 @@ import ArticleComponent from "./ArticleComponent";
     return;
   }
   const article = await (await fetch(`/json/${id.replace(".html", ".json")}`)).json();
-  ReactDOM.hydrate(<ArticleComponent article={article} priv />, document.getElementById("root"));
+  render(
+    <main role="main" id="root">
+      <ArticleComponent article={article} priv />
+    </main>,
+    document.querySelector("html") as Element,
+    document.getElementById("root") as Element);
 })();

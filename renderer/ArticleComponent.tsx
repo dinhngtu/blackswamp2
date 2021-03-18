@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "preact";
 import { Article, Section } from "./Article";
 import SectionComponent from "./SectionComponent";
 
@@ -28,7 +28,7 @@ export function isSectionViewable(art: Article, s: Section, priv: boolean) {
 
 export default function ArticleComponent(props: { article?: Article, priv?: boolean }) {
   if (props.article === undefined) {
-    return <React.Fragment />;
+    return <Fragment />;
   }
   return (
     <article className={isArticlePrivate(props.article) ? "private" : undefined} >
@@ -48,7 +48,7 @@ export default function ArticleComponent(props: { article?: Article, priv?: bool
             </section>
           );
         } else {
-          return <React.Fragment />;
+          return <Fragment />;
         }
       })}
     </article >
