@@ -5,6 +5,7 @@ import { render } from "preact-render-to-string";
 import Vinyl from "vinyl";
 import Ajv, { JSONSchemaType } from "ajv";
 import { Article } from "../renderer/Article";
+import { isArticlePrivate } from "renderer/ArticleComponent";
 
 export interface RenderOptions {
   component: (props: { article: Article }) => VNode;
@@ -72,6 +73,11 @@ export function renderYAML(options: RenderOptions) {
         console.log("failed validation", obj);
         console.log(validator?.errors);
         cb(Error("invalid object"));
+        return;
+      }
+
+      if (isArticlePrivate(obj)) {
+        cb();
         return;
       }
 
