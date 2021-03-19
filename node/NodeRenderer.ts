@@ -87,7 +87,7 @@ export function renderYAML(options: RenderOptions) {
         return;
       }
 
-      let contents = Buffer.concat([Buffer.from("<!doctype html>"), Buffer.from(dom)]);
+      let contents = Buffer.concat([Buffer.from("<!doctype html>"), Buffer.from(dom), Buffer.from("<!--blackswamp2-->")]);
       cb(null, new Vinyl({
         contents,
         path: `${file.stem}.html`
