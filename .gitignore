@@ -15,4 +15,4 @@ yarn-debug.log*
 yarn-error.log*
 
 articles/
-renderer/Article.ts
+schema.json

@@ -1,6 +1,6 @@
 {
   "yaml.schemas": {
-    "renderer/schema.json": [
+    "schema.json": [
       "*.yaml"
     ]
   }
