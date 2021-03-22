@@ -19,15 +19,11 @@
 
 @media (prefers-color-scheme: dark) {
   .private {
-    border-left: 1px solid #444;
+    border-color: #444;
   }
 }
 
 @media (max-width: 767px) {
-  article>h1 {
-    margin: 64px auto 32px;
-  }
-
   .embed-youtube-wrapper {
     width: 100%;
     padding-bottom: 56.25%;
@@ -35,10 +31,6 @@
 }
 
 @media (min-width: 768px) {
-  article>h1 {
-    margin: 64px auto 48px;
-  }
-
   .embed-youtube-wrapper {
     width: 80%;
     padding-bottom: 45%;
@@ -46,10 +38,6 @@
 }
 
 @media (min-width: 1200px) {
-  article>h1 {
-    margin: 64px auto 48px;
-  }
-
   .embed-youtube-wrapper {
     width: 60%;
     padding-bottom: 33.75%;

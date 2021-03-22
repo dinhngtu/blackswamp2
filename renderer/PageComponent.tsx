@@ -23,6 +23,8 @@ export default function PageComponent(props: { article: Article }) {
         <main role="main" id="root">
           <ArticleComponent article={props.article} />
         </main>
+        <footer>
+        </footer>
       </body>
     </html>
   );
