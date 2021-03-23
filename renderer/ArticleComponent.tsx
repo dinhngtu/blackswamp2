@@ -35,6 +35,7 @@ export default function ArticleComponent(props: { article?: Article, priv?: bool
       <header>
         {props.article.Title && <h1>{props.article.Title}</h1>}
         <address>
+          {props.article._ts && <span>Updated {new Date(props.article._ts * 1000).toDateString()} </span>}
           {props.article.Author && <span>by {props.article.Author}</span>}
         </address>
       </header>
