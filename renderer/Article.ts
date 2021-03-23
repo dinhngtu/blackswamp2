@@ -20,6 +20,7 @@ export interface Article {
   Modules?: Module[];
   Privacy?: ArticlePrivacy;
   Sections?: (MarkdownSection | YoutubeSection)[];
+  _ts?: number;
 }
 export interface Section {
   Name?: string;
