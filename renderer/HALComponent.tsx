@@ -43,7 +43,11 @@ export default function HALComponent(props: HALComponentProps) {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await fetch(`https://api.archives-ouvertes.fr/search/?wt=xml-tei&q=authIdHal_s:${props.IdHAL}`);
+        if (!/[a-zA-Z0-9\-]/.test(props.IdHAL)) {
+          setError(true);
+          return;
+        }
+        const resp = await fetch(`https://api.archives-ouvertes.fr/search/?wt=xml-tei&rows=100&sort=producedDate_tdate+desc&q=authIdHal_s:${props.IdHAL}`);
         if (!resp.ok) {
           setError(true);
           return;
@@ -56,9 +60,12 @@ export default function HALComponent(props: HALComponentProps) {
       }
     })();
   }, []);
-  if (loading) {
+
+  if (error) {
+    return <p>Error!</p>
+  } else if (loading) {
     return <p>Loading&hellip;</p>
-  } else if (error || !haldoc) {
+  } else if (!haldoc) {
     return <p>Error!</p>
   }
 
