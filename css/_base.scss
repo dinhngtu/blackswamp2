@@ -1,0 +1,16 @@
+@use "sass:color";
+
+$darken: -21.5%;
+$bg-light: #eee;
+$fg-light: #000;
+$link-light: #00b;
+$link-visited-light: #461673;
+//$border-light: color.scale($bg-light, $lightness: $darken);
+$border-light: #bbb;
+
+$lighten: (1 - (1/(1 - $darken / 100%))) * 100%;
+$bg-dark: #1a1a1a;
+$fg-dark: #e6e6e6;
+$link-dark: #bbf;
+$link-visited-dark: #d4b6f1;
+$border-dark: #444;

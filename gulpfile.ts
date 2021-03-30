@@ -2,7 +2,7 @@ import * as gulp from "gulp";
 import * as tjs from "typescript-json-schema";
 import * as fs from "fs";
 import del from "del";
-import cleanCSS from "gulp-clean-css";
+import sass from "gulp-dart-sass";
 import { renderYAML, yamlToJSON } from "./node/NodeRenderer";
 import PageComponent from "./renderer/PageComponent";
 
@@ -37,8 +37,8 @@ export function articles_json() {
 }
 
 export function css() {
-  return gulp.src("css/**/*.css")
-    .pipe(cleanCSS())
+  return gulp.src("css/**/[!_]*.scss")
+    .pipe(sass({ outputStyle: "compressed" }))
     .pipe(gulp.dest("public/css/"));
 }
 
