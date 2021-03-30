@@ -2,8 +2,38 @@ import { useEffect, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 import purifier from "purifier";
 
+interface BibGroup {
+  name: string;
+  bibs: Element[];
+};
+
 export interface HALComponentProps {
   IdHAL: string;
+}
+
+const docTypes: { [K: string]: number } = {
+  ART: 1,
+  COMM: 2,
+  OUV: 3,
+  COUV: 4,
+  DOUV: 5,
+  REPORT: 6,
+  THESE: 7,
+  HDR: 8,
+  LECTURE: 9,
+  IMG: 10,
+  VIDEO: 11,
+  SON: 12,
+  MAP: 13,
+  SOFTWARE: 14,
+  PATENT: 15,
+  POSTER: 16,
+  OTHER: 17,
+  UNDEFINED: 18,
+};
+
+function getGroupOrder(type: string) {
+  return docTypes[type] || 1000;
 }
 
 export default function HALComponent(props: HALComponentProps) {
@@ -71,11 +101,11 @@ export default function HALComponent(props: HALComponentProps) {
     );
   }
 
-  function renderBibGroup(groupName: string, bibs: Element[]) {
+  function renderBibGroup(groupType: string, bg: BibGroup) {
     return (
-      <Fragment key={groupName}>
-        <h2>{groupName}</h2>
-        <ul class="bibGroup">{bibs
+      <Fragment key={groupType}>
+        <h2>{bg.name}</h2>
+        <ul class="bibGroup">{bg.bibs
           .sort((a, b) => -(getBibDate(a).localeCompare(getBibDate(b))))
           .map((bib, index) => renderBib(bib, index))}</ul>
       </Fragment>
@@ -83,15 +113,18 @@ export default function HALComponent(props: HALComponentProps) {
   }
 
   const bibs = Array.from(haldoc.querySelectorAll("body>listBibl>biblFull"));
-  const bibGroups = bibs.reduce<{ [K: string]: Element[] }>((groups, bib) => {
-    const groupName = bib.querySelector('profileDesc>textClass>classCode[scheme="halTypology"]')?.textContent;
-    if (!groupName) {
-      return groups;
-    }
-    const group = (groups[groupName] || []);
-    group.push(bib);
-    groups[groupName] = group;
+  const bibGroups = bibs.reduce<{ [K: string]: BibGroup }>((groups, bib) => {
+    const groupEl = bib.querySelector('profileDesc>textClass>classCode[scheme="halTypology"]');
+    const groupType = groupEl?.getAttribute("n") || "";
+    const groupName = groupEl?.textContent;
+
+    const group = (groups[groupType] || { name: groupName, bibs: [] });
+    group.bibs.push(bib);
+    groups[groupType] = group;
     return groups;
-  }, {})
-  return <Fragment>{Object.entries(bibGroups).map(([g, bib]) => renderBibGroup(g, bib))}</Fragment>;
+  }, {});
+  const renderedBibGroups = Object.entries(bibGroups)
+    .sort((a, b) => getGroupOrder(a[0]) - getGroupOrder(b[0]))
+    .map(([g, bib]) => renderBibGroup(g, bib));
+  return <Fragment>{renderedBibGroups}</Fragment>;
 }
