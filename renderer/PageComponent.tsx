@@ -15,6 +15,12 @@ export default function PageComponent(props: { article: Article }) {
         <link rel="stylesheet" href="/css/article.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" href={"https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display&display=swap"} />
+        {props.article.Modules?.map(mod => {
+          const m = /^CSS\.([a-zA-Z0-9]+)$/.exec(mod);
+          if (m?.length === 2) {
+            return <link rel="stylesheet" href={`/css/${m[1]}.css`} />;
+          }
+        })}
         {props.article.Modules?.includes("Dynamic") && (
           <script src="/js/dynamic.js" async defer />
         )}
