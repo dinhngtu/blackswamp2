@@ -1,0 +1,24 @@
+.bibGroup {
+  padding: 0;
+}
+
+.bib {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  list-style: none;
+}
+
+.bib>* {
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.bibTitle {
+  font-weight: bold;
+}
+
+.bibRef {
+  font-size: 0.8rem;
+  line-height: 1rem;
+}
