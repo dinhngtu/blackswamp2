@@ -1,5 +1,7 @@
+@use "base";
+
 .private {
-  border-left: 1px solid #bbb;
+  border-left: 1px solid base.$border-light;
   padding-left: 7px;
   margin-left: -8px;
 }
@@ -19,7 +21,7 @@
 
 @media (prefers-color-scheme: dark) {
   .private {
-    border-color: #444;
+    border-color: base.$bg-dark;
   }
 }
 

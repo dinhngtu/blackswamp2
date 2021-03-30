@@ -1,8 +1,12 @@
+@use "base";
+
 html {
   height: 100%;
-  color: #000;
-  background-color: #eee;
+  color: base.$fg-light;
+  background-color: base.$bg-light;
   box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.5rem;
 }
 
 *,
@@ -27,6 +31,7 @@ footer {
   display: flex;
   justify-content: flex-end;
   font-size: 0.8rem;
+  line-height: 2rem;
 }
 
 h1,
@@ -51,12 +56,12 @@ li {
 
 pre {
   padding: 4px 8px;
-  border: 1px solid #bbb;
+  border: 1px solid base.$border-light;
 }
 
 address {
   font-size: 0.8rem;
-  line-height: 2;
+  line-height: 2rem;
 }
 
 p {
@@ -64,11 +69,11 @@ p {
 }
 
 a {
-  color: #00b;
+  color: base.$link-light;
 }
 
 a:visited {
-  color: #461673;
+  color: base.$link-visited-light;
 }
 
 img {
@@ -77,27 +82,26 @@ img {
 
 @media (prefers-color-scheme: dark) {
   html {
-    color: #e6e6e6;
-    background-color: #1a1a1a;
+    color: base.$fg-dark;
+    background-color: base.$bg-dark;
   }
 
   a {
-    color: #bbf;
+    color: base.$link-dark;
   }
 
   a:visited {
-    color: #d4b6f1;
+    color: base.$link-visited-dark;
   }
 
   pre {
-    border-color: #444;
+    border-color: base.$border-dark;
   }
 }
 
 @media (max-width: 767px) {
   body {
     padding: 24px 24px 24px;
-    line-height: 1.5;
   }
 
   section,
@@ -123,7 +127,6 @@ img {
 @media (min-width: 768px) {
   body {
     padding: 96px 160px 24px;
-    line-height: 1.5;
   }
 
   section,
