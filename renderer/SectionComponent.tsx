@@ -1,7 +1,8 @@
 import { Fragment } from "preact";
 import marked from "marked";
 import purifier from "purifier";
-import { MarkdownSection, Section, YoutubeSection } from "./Article";
+import { HALPublicationsSection, MarkdownSection, Section, YoutubeSection } from "./Article";
+import HALComponent from "./HALComponent";
 
 function isMarkdownSection(s: Section): s is MarkdownSection {
   return (s as MarkdownSection).Markdown !== undefined;
@@ -9,6 +10,10 @@ function isMarkdownSection(s: Section): s is MarkdownSection {
 
 function isYoutubeSection(s: Section): s is YoutubeSection {
   return (s as YoutubeSection).YoutubeId !== undefined;
+}
+
+function isHALSection(s: Section): s is HALPublicationsSection {
+  return (s as HALPublicationsSection).IdHAL !== undefined;
 }
 
 function MarkdownSectionComponent(s: MarkdownSection) {
@@ -42,6 +47,8 @@ export default function SectionComponent(s: Section) {
     return MarkdownSectionComponent(s);
   } else if (isYoutubeSection(s)) {
     return YoutubeSectionComponent(s);
+  } else if (isHALSection(s)) {
+    return HALComponent(s);
   } else {
     return <Fragment />;
   }
