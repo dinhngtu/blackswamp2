@@ -43,7 +43,7 @@ export default function HALComponent(props: HALComponentProps) {
   useEffect(() => {
     (async () => {
       try {
-        if (!/^[a-zA-Z0-9\-]$/.test(props.IdHAL)) {
+        if (!/^[a-zA-Z0-9\-]+$/.test(props.IdHAL)) {
           setError(true);
           return;
         }
