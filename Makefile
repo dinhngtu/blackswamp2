@@ -4,8 +4,8 @@ ARTICLES_SOURCES=$(wildcard articles/*.yaml)
 ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
 ARTICLES_JSON=$(patsubst articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
 
-CSS_SOURCES=$(wildcard css/[!_]*.scss)
-CSS_OBJ=$(patsubst css/%.scss,public/css/%.css,$(CSS_SOURCES))
+CSS_SOURCES=$(wildcard css/[!_]*.css)
+CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
 
 RENDERER_SOURCES=$(wildcard renderer/*.{ts,tsx})
 NODE_SOURCES=$(wildcard node/*.{ts,tsx})
@@ -28,8 +28,8 @@ public/json/%.json: articles/%.yaml render-json.ts
 
 articles_json: $(ARTICLES_JSON)
 
-public/css/%.css: css/%.scss
-	sass -s compressed --no-source-map $< $@
+public/css/%.css: css/%.css
+	cleancss $< -o $@
 
 css: $(CSS_OBJ)
 
