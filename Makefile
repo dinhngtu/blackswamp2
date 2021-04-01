@@ -1,4 +1,6 @@
 export PATH:=./node_modules/.bin:$(PATH)
+export TS_NODE_TRANSPILE_ONLY:=true
+export TS_NODE_FILES:=true
 
 ARTICLES_SOURCES=$(wildcard articles/*.yaml)
 ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
@@ -23,8 +25,8 @@ articles: $(ARTICLES_HTML)
 	cp -f public/articles/index.html public/index.html
 	cp -f public/articles/404.html public/404.html
 
-public/json/%.json: articles/%.yaml render-json.ts
-	ts-node render-json.ts $< $@
+public/json/%.json: articles/%.yaml render-json.js
+	node render-json.js $< $@
 
 articles_json: $(ARTICLES_JSON)
 
