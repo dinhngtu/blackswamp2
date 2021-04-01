@@ -1,9 +1,25 @@
-@use "base";
+:root {
+  --bg: #eee;
+  --fg: #000;
+  --link: #00b;
+  --link-visited: #461673;
+  --border: #bbb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --fg: #e6e6e6;
+    --link: #bbf;
+    --link-visited: #d4b6f1;
+    --border: #444;
+  }
+}
 
 html {
   height: 100%;
-  color: base.$fg-light;
-  background-color: base.$bg-light;
+  color: var(--fg);
+  background-color: var(--bg);
   box-sizing: border-box;
   font-size: 16px;
   line-height: 1.5;
@@ -56,7 +72,7 @@ li {
 
 pre {
   padding: 4px 8px;
-  border: 1px solid base.$border-light;
+  border: 1px solid var(--border);
 }
 
 address {
@@ -69,34 +85,15 @@ p {
 }
 
 a {
-  color: base.$link-light;
+  color: var(--link);
 }
 
 a:visited {
-  color: base.$link-visited-light;
+  color: var(--link-visited);
 }
 
 img {
   max-width: 100%;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color: base.$fg-dark;
-    background-color: base.$bg-dark;
-  }
-
-  a {
-    color: base.$link-dark;
-  }
-
-  a:visited {
-    color: base.$link-visited-dark;
-  }
-
-  pre {
-    border-color: base.$border-dark;
-  }
 }
 
 @media (max-width: 767px) {
