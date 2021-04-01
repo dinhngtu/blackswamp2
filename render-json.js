@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import YAML from "yaml";
-import path from "path";
+const fs = require("fs");
+const YAML = require("yaml");
+const path = require("path");
 
 if (process.argv.length !== 4) {
   throw Error(`usage: ${process.argv[1]} infile outfile`);

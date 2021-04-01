@@ -14,7 +14,7 @@ export default {
   plugins: [
     ts({
       typescript,
-      tsconfig: "tsconfig.dynamic.json",
+      tsconfig: "tsconfig.dynamic.json"
     }),
     nodeResolve({
       browser: true
@@ -23,7 +23,7 @@ export default {
       'process.env.NODE_ENV': JSON.stringify('production'),
       preventAssignment: true
     }),
-    commonjs(),
+    commonjs({ sourceMap: false }),
     terser()
-  ],
-}
+  ]
+};
