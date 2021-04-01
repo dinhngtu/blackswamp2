@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import { Fragment } from "preact/jsx-runtime";
+import { Fragment } from "preact";
 import purifier from "purifier";
 
 interface BibGroup {
