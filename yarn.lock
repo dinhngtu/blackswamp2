@@ -906,10 +906,10 @@ picomatch@^2.2.2:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
 
-preact-render-to-string@^5.1.16:
-  version "5.1.16"
-  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.1.16.tgz#379db30e51916d45a67c00163ef812ad376aa721"
-  integrity sha512-HvO3W29Sziz9r5FZGwl2e34XJKzyRLvjhouv3cpkCGszNPdnvkO8p4B6CBpe0MT/tzR+QVbmsAKLrMK222UXew==
+preact-render-to-string@^5.1.18:
+  version "5.1.18"
+  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.1.18.tgz#c57fe62642981db47e95edda2354873e6b799a1a"
+  integrity sha512-jTL6iTZeheYOhb54r7KuyrNCf33lc+Z52Wos5P1z2wGZ/dREfhBVwrK1qGOrl4fboBN1KxC1lxhBchDHNZr8Uw==
   dependencies:
     pretty-format "^3.8.0"
 
