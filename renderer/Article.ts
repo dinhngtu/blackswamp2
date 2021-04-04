@@ -14,6 +14,7 @@ export type HALPublicationsSection = Section & {
 
 export interface Article {
   id: string;
+  Language?: string;
   Title?: string;
   Author?: string;
   Description?: string;
