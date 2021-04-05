@@ -16,7 +16,7 @@
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/dompurify": "^2.2.1",
     "@types/jsdom": "^16.2.7",
-    "@types/marked": "^2.0.0",
+    "@types/marked": "^2.0.1",
     "ajv": "^7.2.1",
     "clean-css-cli": "^5.2.2",
     "dompurify": "^2.2.7",
