@@ -37,7 +37,7 @@ http.createServer(function (request, response) {
   fs.readFile(filePath, function (error, content) {
     if (error) {
       if (error.code == 'ENOENT') {
-        fs.readFile('./404.html', function (_error, content) {
+        fs.readFile(root + '/404.html', function (_error, content) {
           response.writeHead(404, { 'Content-Type': 'text/html' });
           response.end(content, 'utf-8');
         });
