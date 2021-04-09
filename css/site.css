@@ -80,10 +80,6 @@ address {
   line-height: 2rem;
 }
 
-p {
-  text-align: justify;
-}
-
 a {
   color: var(--link);
 }
