@@ -1,6 +1,8 @@
-export PATH:=./node_modules/.bin:$(PATH)
 export TS_NODE_TRANSPILE_ONLY:=true
 export TS_NODE_FILES:=true
+
+RUN=yarn run
+NODE=yarn node
 
 ARTICLES_SOURCES=$(wildcard articles/*.yaml)
 ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
@@ -16,29 +18,29 @@ SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES)
 all: schema.json articles articles_json css js
 
 schema.json: tsconfig.json renderer/Article.ts
-	typescript-json-schema --tsNodeRegister $< Article -o $@
+	$(RUN) typescript-json-schema --tsNodeRegister $< Article -o $@
 
 public/articles/%.html: articles/%.yaml render.ts schema.json $(SOURCES)
-	ts-node -r tsconfig-paths/register render.ts $< $@
+	$(RUN) ts-node -r tsconfig-paths/register render.ts $< $@
 
 articles: $(ARTICLES_HTML)
 	cp -f public/articles/index.html public/index.html
 	cp -f public/articles/404.html public/404.html
 
 public/json/%.json: articles/%.yaml render-json.js
-	node render-json.js $< $@
+	$(NODE) render-json.js $< $@
 
 articles_json: $(ARTICLES_JSON)
 
 public/css/%.css: css/%.css
-	cleancss $< -o $@
+	$(RUN) cleancss $< -o $@
 
 css: $(CSS_OBJ)
 
 public/js/dynamic.js: $(RENDERER_SOURCES)
 
 js: public/js/dynamic.js
-	rollup -c
+	$(RUN) rollup -c
 
 clean:
 	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js
