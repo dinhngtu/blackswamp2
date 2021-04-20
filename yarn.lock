@@ -75,7 +75,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-replace@npm:^2.4.1":
+"@rollup/plugin-replace@npm:^2.4.2":
   version: 2.4.2
   resolution: "@rollup/plugin-replace@npm:2.4.2"
   dependencies:
@@ -144,7 +144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom@npm:^16.2.7":
+"@types/jsdom@npm:^16.2.10":
   version: 16.2.10
   resolution: "@types/jsdom@npm:16.2.10"
   dependencies:
@@ -169,10 +169,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@types/marked@npm:2.0.1"
-  checksum: 010659c50dea341569eda30f87e9c29722cb1ec60f50b1810d09f882acb2ab2c9c2a1cc7283c31ca54970d202ec9ee50f632b4e0d0605b88807eda34a94d454c
+"@types/marked@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@types/marked@npm:2.0.2"
+  checksum: 2800769bbab52a8812f9671404bbaccc5eee5ed9e140d0236a4e70ef629f9e789debb2445a27800f316d40834a6ea58375e868317ee7d64d2c4328e8c015a0c2
   languageName: node
   linkType: hard
 
@@ -304,15 +304,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.0.5":
-  version: 8.0.5
-  resolution: "ajv@npm:8.0.5"
+"ajv@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "ajv@npm:8.1.0"
   dependencies:
     fast-deep-equal: ^3.1.1
     json-schema-traverse: ^1.0.0
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
-  checksum: 721b491110bda18a6e718dc8a3bca091ea8bb1b92e6e809baffc63cb9a5faf1ca424eb1639277ed00bc602f8614e936f3b5d96de28778fe0eedd76bb8c1d39d3
+  checksum: d946a17d0f44418863d23282868ce79c51ba3a3ca9cca4eb9a0e66151c9f8cf790febb4a1ffe5a831a52d21639d3e140586736406cdde177a804aebacd45f2ca
   languageName: node
   linkType: hard
 
@@ -438,24 +438,24 @@ __metadata:
   dependencies:
     "@rollup/plugin-commonjs": ^18.0.0
     "@rollup/plugin-node-resolve": ^11.2.1
-    "@rollup/plugin-replace": ^2.4.1
+    "@rollup/plugin-replace": ^2.4.2
     "@rollup/plugin-typescript": ^8.2.1
     "@types/dompurify": ^2.2.1
-    "@types/jsdom": ^16.2.7
-    "@types/marked": ^2.0.0
-    ajv: ^8.0.5
+    "@types/jsdom": ^16.2.10
+    "@types/marked": ^2.0.2
+    ajv: ^8.1.0
     clean-css-cli: ^5.2.2
     dompurify: ^2.2.7
-    jsdom: ^16.5.2
-    marked: ^2.0.1
+    jsdom: ^16.5.3
+    marked: ^2.0.3
     preact: ^10.5.13
-    preact-render-to-string: ^5.1.18
-    rollup: ^2.41.4
+    preact-render-to-string: ^5.1.19
+    rollup: ^2.45.2
     rollup-plugin-terser: ^7.0.2
     ts-node: ^9.1.1
     tsconfig-paths: ^3.9.0
-    tslib: ^2.1.0
-    typescript: ^4.2.3
+    tslib: ^2.2.0
+    typescript: ^4.2.4
     typescript-json-schema: ^0.50.0
     yaml: ^1.10.2
   languageName: unknown
@@ -1346,9 +1346,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^16.5.2":
-  version: 16.5.2
-  resolution: "jsdom@npm:16.5.2"
+"jsdom@npm:^16.5.3":
+  version: 16.5.3
+  resolution: "jsdom@npm:16.5.3"
   dependencies:
     abab: ^2.0.5
     acorn: ^8.1.0
@@ -1381,7 +1381,7 @@ fsevents@~2.3.1:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: a0be91b456596db988e1c5c6a146fcceb4fb6d401b947498c5b4cd7ff3202ce8ca3816be77a60d112bc45916fc7959fb7aeb98e81729c36bf4fef566c91c02db
+  checksum: 02f6e3b5bb6c75f70b256f9fb522ce67cdf035c8e073a61f152876570d29453f164a4f1ea38a62e419511f81f6f75ced793e6332b66a647dc8012daacff27b8e
   languageName: node
   linkType: hard
 
@@ -1517,12 +1517,12 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"marked@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "marked@npm:2.0.1"
+"marked@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "marked@npm:2.0.3"
   bin:
     marked: bin/marked
-  checksum: dd6f468a96ddfd6efbfdaa2f0fa61899b2ce1f8dac0a93c13d847d0fca6872d1f32362d7fe097932aeabc1dfbd83e33bb009a159860f60551d4c6adbdc5a0faf
+  checksum: 18940065203f4eacf84538d57478cdab170ca024c01e8cb992871f48fedb8a534bb69a908edd5b2c4d0468fb751ed4da52996cda5a45f063e71e433bbb7f04f7
   languageName: node
   linkType: hard
 
@@ -1796,7 +1796,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"preact-render-to-string@npm:^5.1.18":
+"preact-render-to-string@npm:^5.1.19":
   version: 5.1.19
   resolution: "preact-render-to-string@npm:5.1.19"
   dependencies:
@@ -2015,9 +2015,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.41.4":
-  version: 2.45.0
-  resolution: "rollup@npm:2.45.0"
+"rollup@npm:^2.45.2":
+  version: 2.45.2
+  resolution: "rollup@npm:2.45.2"
   dependencies:
     fsevents: ~2.3.1
   dependenciesMeta:
@@ -2025,7 +2025,7 @@ fsevents@~2.3.1:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 2b08e65eb1177e0ed2e7484f7dc72ddc386050e6ad46eba46e76ce8cdc37ba05eefea695600c4062a5e2710edc80f1fac650da632355c8405ad830f154ab1878
+  checksum: b07c6051c35ed30916f529cbfb3731c9ac10355daca167ba8d863bcda6499e39593e078eb8e29b4bf94a1e3d112e1cdfa908fe147a231b6a93b9fd6b732beb98
   languageName: node
   linkType: hard
 
@@ -2379,7 +2379,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0":
+"tslib@npm:^2.2.0":
   version: 2.2.0
   resolution: "tslib@npm:2.2.0"
   checksum: 2d35468c470410871c5246e43f12dcb6d0fc363b617c176f26443b9530e5c5ee8448966892a42956168d8f495da7865bda33dfe82c26c91991e28999974a618f
@@ -2428,7 +2428,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-typescript@^4.2.3:
+"typescript@^4.2.3, typescript@^4.2.4":
   version: 4.2.4
   resolution: "typescript@npm:4.2.4"
   bin:
@@ -2438,7 +2438,7 @@ typescript@^4.2.3:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.2.3#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.2.3#builtin<compat/typescript>, typescript@patch:typescript@^4.2.4#builtin<compat/typescript>":
   version: 4.2.4
   resolution: "typescript@patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"
   bin:
