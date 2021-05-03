@@ -304,15 +304,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "ajv@npm:8.1.0"
+"ajv@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "ajv@npm:8.2.0"
   dependencies:
     fast-deep-equal: ^3.1.1
     json-schema-traverse: ^1.0.0
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
-  checksum: d946a17d0f44418863d23282868ce79c51ba3a3ca9cca4eb9a0e66151c9f8cf790febb4a1ffe5a831a52d21639d3e140586736406cdde177a804aebacd45f2ca
+  checksum: 949f891686134c49c9c98c401d29ccd9e0cbd5d2c76163edd21c3c6bea694a4f7e5108fdc0c55b4cc90de85c93a9356fc30b3a7fab222721db3e38c585c61053
   languageName: node
   linkType: hard
 
@@ -443,14 +443,14 @@ __metadata:
     "@types/dompurify": ^2.2.1
     "@types/jsdom": ^16.2.10
     "@types/marked": ^2.0.2
-    ajv: ^8.1.0
-    clean-css-cli: ^5.2.2
-    dompurify: ^2.2.7
+    ajv: ^8.2.0
+    clean-css-cli: ^5.3.0
+    dompurify: ^2.2.8
     jsdom: ^16.5.3
     marked: ^2.0.3
     preact: ^10.5.13
     preact-render-to-string: ^5.1.19
-    rollup: ^2.45.2
+    rollup: ^2.46.0
     rollup-plugin-terser: ^7.0.2
     ts-node: ^9.1.1
     tsconfig-paths: ^3.9.0
@@ -542,16 +542,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clean-css-cli@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "clean-css-cli@npm:5.2.2"
+"clean-css-cli@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "clean-css-cli@npm:5.3.0"
   dependencies:
     clean-css: ^5.1.2
     commander: 7.x
     glob: ^7.1.6
   bin:
     cleancss: bin/cleancss
-  checksum: 9d29fd017278e90dd99b5d31e3f723d8b4e117118877508b608e93f4081d93141b5b558b2ae5a25d69f74bb12c486e29a7589e3f8ee73bfae405b8329c3e358d
+  checksum: 41e6e452bd7bf9a97be5d058176dbe14f5a64ce5ba671f19a1a9eafde028c1b134e8cdca082b22912de1492bde3cfb5d089ebff64875f846056cf3cb6762d507
   languageName: node
   linkType: hard
 
@@ -792,10 +792,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^2.2.7":
-  version: 2.2.7
-  resolution: "dompurify@npm:2.2.7"
-  checksum: ddf23c494b0417c764384817716a19daebd7c3c528ce26360390952d6661679d9058ccc643ea8930223201a41a89affb07c3f01d1c6cbe057d01c6607e01b6c4
+"dompurify@npm:^2.2.8":
+  version: 2.2.8
+  resolution: "dompurify@npm:2.2.8"
+  checksum: c8498b4dc81c5b61f84c09836da7ed1ab61fce3f349bbcf669b28a44047d85f795141c4a1daa66879481560b955bfbd1dc9dae04ad554f52d727739ecb6ea545
   languageName: node
   linkType: hard
 
@@ -2015,9 +2015,9 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.45.2":
-  version: 2.45.2
-  resolution: "rollup@npm:2.45.2"
+"rollup@npm:^2.46.0":
+  version: 2.46.0
+  resolution: "rollup@npm:2.46.0"
   dependencies:
     fsevents: ~2.3.1
   dependenciesMeta:
@@ -2025,7 +2025,7 @@ fsevents@~2.3.1:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: b07c6051c35ed30916f529cbfb3731c9ac10355daca167ba8d863bcda6499e39593e078eb8e29b4bf94a1e3d112e1cdfa908fe147a231b6a93b9fd6b732beb98
+  checksum: d06dfec49dee3ec6973cab356fb74a2446c08a0d64185826081f9755353a87826a51ae43d1c88f985a756eb4c74eedfbca97c6050a3e39a17cc6d96dd48505f8
   languageName: node
   linkType: hard
 
