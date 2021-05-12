@@ -2,28 +2,26 @@ import ts from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import replace from '@rollup/plugin-replace';
-import { terser } from "rollup-plugin-terser";
+import externals from 'rollup-plugin-node-externals';
 import typescript from "typescript";
 
 export default {
-  input: "./renderer/DynamicRenderer.tsx",
+  input: "./node/render.ts",
   output: {
-    file: "public/js/dynamic.js",
-    format: "iife"
+    file: "render.js",
+    format: "cjs"
   },
   plugins: [
     ts({
       typescript,
-      tsconfig: "tsconfig.dynamic.json"
+      tsconfig: "tsconfig.static.json"
     }),
-    nodeResolve({
-      browser: true
-    }),
+    externals(),
+    nodeResolve(),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
       preventAssignment: true
     }),
-    commonjs({ sourceMap: false }),
-    terser()
+    commonjs({ sourceMap: false })
   ]
 };

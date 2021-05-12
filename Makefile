@@ -1,8 +1,7 @@
-export TS_NODE_TRANSPILE_ONLY:=true
-export TS_NODE_FILES:=true
+export TS_NODE_TRANSPILE_ONLY=true
+export TS_NODE_FILES=true
 
-RUN=yarn run
-NODE=yarn node
+NODE=node
 
 ARTICLES_SOURCES=$(wildcard articles/*.yaml)
 ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
@@ -13,37 +12,56 @@ CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
 
 RENDERER_SOURCES=$(wildcard renderer/*.{ts,tsx})
 NODE_SOURCES=$(wildcard node/*.{ts,tsx})
-SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES)
 
-all: schema.json articles articles_json css js
+STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES)
+DYNAMIC_SOURCES=$(RENDERER_SOURCES)
 
-schema.json: tsconfig.json renderer/Article.ts
-	$(RUN) typescript-json-schema --tsNodeRegister $< Article -o $@
+all: articles articles_json css js
 
-public/articles/%.html: articles/%.yaml render.ts schema.json $(SOURCES)
-	$(RUN) ts-node -r tsconfig-paths/register render.ts $< $@
+schema.json: tsconfig.static.json renderer/Article.ts
+	./node_modules/.bin/typescript-json-schema --tsNodeRegister $< Article -o $@
 
-articles: $(ARTICLES_HTML)
-	cp -f public/articles/index.html public/index.html
-	cp -f public/articles/404.html public/404.html
+render.js: rollup.static.config.js $(STATIC_SOURCES)
+	./node_modules/.bin/rollup -c $<
 
-public/json/%.json: articles/%.yaml render.ts schema.json $(SOURCES)
-	$(RUN) ts-node -r tsconfig-paths/register render.ts --format json --private $< $@
+public/articles/%.html: articles/%.yaml render.js schema.json $(STATIC_SOURCES)
+	$(NODE) render.js $< $@
+
+public/404.html: public/articles/404.html
+	cp -f $< $@
+
+public/index.html: public/articles/index.html
+	cp -f $< $@
+
+articles: public/index.html public/404.html
+
+public/json/%.json: articles/%.yaml render.js schema.json $(STATIC_SOURCES)
+	$(NODE) render.js --format json --private $< $@
 
 articles_json: $(ARTICLES_JSON)
 
 public/css/%.css: css/%.css
-	$(RUN) cleancss $< -o $@
+	./node_modules/.bin/cleancss $< -o $@
 
 css: $(CSS_OBJ)
 
-public/js/dynamic.js: $(RENDERER_SOURCES)
+public/js/dynamic.js: rollup.dynamic.config.js $(DYNAMIC_SOURCES)
+	./node_modules/.bin/rollup -c $<
 
 js: public/js/dynamic.js
-	$(RUN) rollup -c
+
+# referenced deps
+
+rollup.static.config.js: tsconfig.static.json
+
+tsconfig.static.json: tsconfig.base.json
+
+rollup.dynamic.config.js: tsconfig.dynamic.json
+
+tsconfig.dynamic.json: tsconfig.base.json
 
 clean:
-	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js
+	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js render.js
 
 cleanall: clean
 	$(RM) -r public/

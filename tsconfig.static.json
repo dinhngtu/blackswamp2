@@ -3,11 +3,12 @@
   "compilerOptions": {
     "paths": {
       "purifier": [
-        "renderer/purifier.ts"
+        "node/purifier.ts"
       ]
     }
   },
   "include": [
-    "renderer/**/*"
+    "renderer/**/*",
+    "node/**/*"
   ]
 }
