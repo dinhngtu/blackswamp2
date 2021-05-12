@@ -27,8 +27,8 @@ articles: $(ARTICLES_HTML)
 	cp -f public/articles/index.html public/index.html
 	cp -f public/articles/404.html public/404.html
 
-public/json/%.json: articles/%.yaml render-json.js
-	$(NODE) render-json.js $< $@
+public/json/%.json: articles/%.yaml render.ts schema.json $(SOURCES)
+	$(RUN) ts-node -r tsconfig-paths/register render.ts --format json --private $< $@
 
 articles_json: $(ARTICLES_JSON)
 
@@ -45,4 +45,7 @@ js: public/js/dynamic.js
 clean:
 	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js
 
-.PHONY: clean
+cleanall: clean
+	$(RM) -r public/
+
+.PHONY: clean cleanall
