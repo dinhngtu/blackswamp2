@@ -3,21 +3,22 @@ import Ajv, { JSONSchemaType } from "ajv";
 import YAML from "yaml";
 import path from "path";
 import minimist from "minimist";
-import { Article } from "./renderer/Article";
-import { isArticlePrivate } from "./renderer/ArticleComponent";
-import PageComponent from "./renderer/PageComponent";
-import { renderArticle } from "./node/NodeRenderer";
+import { Article } from "../renderer/Article";
+import { isArticlePrivate } from "../renderer/ArticleComponent";
+import PageComponent from "../renderer/PageComponent";
+import { renderArticle } from "./NodeRenderer";
 
-const args = minimist(process.argv.slice(2), {
+const argopts = {
   boolean: ["no-validate", "private", "help"],
   default: {
-    "schema": "schema.json",
+    "schema": "./schema.json",
     "format": "html",
   }
-});
+};
+const args = minimist(process.argv.slice(2), argopts);
 
 if (args.help || args._.length !== 2) {
-  console.log(`Usage: ${process.argv[1]} [--no-validate] [--private] [--schema schema.json] [--format html|json] infile outfile`);
+  console.log(`Usage: ${process.argv[1]} [--no-validate] [--private] [--schema ${argopts.default.schema}] [--format html|json] infile outfile`);
   process.exit(1);
 }
 

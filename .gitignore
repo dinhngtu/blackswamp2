@@ -23,3 +23,4 @@ yarn-error.log*
 
 articles/
 schema.json
+render.js
