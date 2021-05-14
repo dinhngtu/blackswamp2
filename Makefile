@@ -64,6 +64,6 @@ clean:
 	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js render.js
 
 cleanall: clean
-	$(RM) -r public/
+	$(RM) public/articles/*.html public/css/*.css public/js/*.js public/json/*.json
 
 .PHONY: clean cleanall
