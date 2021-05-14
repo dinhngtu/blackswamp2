@@ -33,7 +33,7 @@ public/404.html: public/articles/404.html
 public/index.html: public/articles/index.html
 	cp -f $< $@
 
-articles: public/index.html public/404.html
+articles: $(ARTICLES_HTML) public/index.html public/404.html
 
 public/json/%.json: articles/%.yaml render.js schema.json $(STATIC_SOURCES)
 	$(NODE) render.js --format json --private $< $@
