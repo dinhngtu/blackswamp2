@@ -53,12 +53,16 @@ js: public/js/dynamic.js
 # referenced deps
 
 rollup.static.config.js: tsconfig.static.json
+	touch $@
 
 tsconfig.static.json: tsconfig.base.json
+	touch $@
 
 rollup.dynamic.config.js: tsconfig.dynamic.json
+	touch $@
 
 tsconfig.dynamic.json: tsconfig.base.json
+	touch $@
 
 clean:
 	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js render.js
