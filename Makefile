@@ -18,7 +18,7 @@ DYNAMIC_SOURCES=$(RENDERER_SOURCES)
 all: articles articles_json css js
 
 schema.json: tsconfig.static.json renderer/Article.ts
-	./node_modules/.bin/typescript-json-schema --tsNodeRegister $< Article -o $@
+	./node_modules/.bin/typescript-json-schema $< Article -o $@
 
 render.js: rollup.static.config.js $(STATIC_SOURCES)
 	./node_modules/.bin/rollup -c $<
