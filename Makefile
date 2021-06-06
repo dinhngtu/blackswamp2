@@ -2,7 +2,9 @@ NODE?=node
 
 ARTICLES_SOURCES=$(wildcard articles/*.yaml)
 ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
+ARTICLES_HTML_TOUCH=$(patsubst articles/%.yaml,public/articles/%.html.touch,$(ARTICLES_SOURCES))
 ARTICLES_JSON=$(patsubst articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
+ARTICLES_JSON_TOUCH=$(patsubst articles/%.yaml,public/json/%.json.touch,$(ARTICLES_SOURCES))
 
 CSS_SOURCES=$(wildcard css/[!_]*.css)
 CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
@@ -25,20 +27,42 @@ render.js: rollup.static.config.js $(STATIC_SOURCES)
 
 # html
 
-public/articles/%.html: articles/%.yaml render.js schema.json $(STATIC_SOURCES)
-	$(NODE) render.js $< $@
+# all targeted html files should be newer than this file to allow for cleaning up non-targeted files
+public/articles/.guard:
+	@touch $@
+
+public/articles/%.html: articles/%.yaml render.js schema.json $(STATIC_SOURCES) | public/articles/.guard
+	@printf HTML\\t$@\\n
+	@$(NODE) render.js $< $@
+
+# this forced static pattern ensures that all targeted html files are newer than guard
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch:
+	@touch -c $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@)
 
 public/%.html: public/articles/%.html
-	cp -f $< $@
+	@printf INDEX\\t$@\\n
+	@cp -f $< $@
 
-articles: $(ARTICLES_HTML) public/index.html public/404.html
+# cleanup non-targeted files
+articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.html
+	@find public/articles/ -type f -name '*.html' \! -newer public/articles/.guard -printf 'DELETE\t%p\n' -delete
+	@$(RM) public/articles/.guard public/articles/*.touch
 
 # json
 
-public/json/%.json: articles/%.yaml render.js schema.json $(STATIC_SOURCES)
-	$(NODE) render.js --format json --private $< $@
+public/json/.guard:
+	@touch $@
 
-articles_json: $(ARTICLES_JSON)
+public/json/%.json: articles/%.yaml render.js schema.json $(STATIC_SOURCES) | public/json/.guard
+	@printf JSON\\t$@\\n
+	@$(NODE) render.js --format json --private $< $@
+
+$(ARTICLES_JSON_TOUCH): public/json/%.json.touch:
+	@touch -c $(patsubst public/json/%.json.touch,public/json/%.json,$@)
+
+articles_json: $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
+	@find public/json/ -type f -name '*.json' \! -newer public/json/.guard -printf 'DELETE\t%p\n' -delete
+	@$(RM) public/json/.guard public/json/*.touch
 
 # css/js
 
