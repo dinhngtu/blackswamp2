@@ -25,6 +25,8 @@ schema.json: tsconfig.static.json renderer/Article.ts
 render.js: rollup.static.config.js $(STATIC_SOURCES)
 	./node_modules/.bin/rollup -c $<
 
+.SUFFIXES:
+
 # html
 
 # all targeted html files should be newer than this file to allow for cleaning up non-targeted files
