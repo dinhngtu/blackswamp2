@@ -2,7 +2,7 @@ import { Article } from "./Article";
 import ArticleComponent from "./ArticleComponent";
 
 export default function PageComponent(props: { article: Article }) {
-  const pageTitle = (props.article.Title ? `${props.article.Title} - ` : "") + "tudinh.xyz";
+  const pageTitle = (props.article.Title ? `${props.article.Title} &ndash; ` : "") + "tudinh.xyz";
   return (
     <html lang={props.article.Language || "en"}>
       <head>
