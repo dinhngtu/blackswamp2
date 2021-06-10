@@ -4,6 +4,10 @@ import purifier from "purifier";
 import { HALPublicationsSection, MarkdownSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
 
+marked.setOptions({
+  headerIds: false,
+});
+
 function isMarkdownSection(s: Section): s is MarkdownSection {
   return (s as MarkdownSection).Markdown !== undefined;
 }
