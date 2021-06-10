@@ -38,7 +38,7 @@ public/articles/%.html: articles/%.yaml render.js schema.json $(STATIC_SOURCES) 
 	@$(NODE) render.js $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
-$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch:
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: | public/articles/.guard
 	@touch -c $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@)
 
 public/%.html: public/articles/%.html
@@ -59,7 +59,7 @@ public/json/%.json: articles/%.yaml render.js schema.json | public/json/.guard
 	@printf JSON\\t$@\\n
 	@$(NODE) render.js --format json --private $< $@
 
-$(ARTICLES_JSON_TOUCH): public/json/%.json.touch:
+$(ARTICLES_JSON_TOUCH): public/json/%.json.touch: | public/json/.guard
 	@touch -c $(patsubst public/json/%.json.touch,public/json/%.json,$@)
 
 articles_json: $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
