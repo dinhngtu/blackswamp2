@@ -1,8 +1,20 @@
 import { Article } from "./Article";
 import ArticleComponent from "./ArticleComponent";
 
+function renderModule(mod: string) {
+  const css = /^CSS\.([a-zA-Z0-9]+)$/.exec(mod);
+  if (css?.length === 2) {
+    return <link rel="stylesheet" href={`/css/${css[1]}.css`} />;
+  }
+
+  const js = /^JS\.([a-zA-Z0-9]+)$/.exec(mod);
+  if (js?.length === 2) {
+    return <script src={`/js/${js[1]}.js`} defer />;
+  }
+}
+
 export default function PageComponent(props: { article: Article }) {
-  const pageTitle = (props.article.Title ? `${props.article.Title} &ndash; ` : "") + "tudinh.xyz";
+  const pageTitle = (props.article.Title ? `${props.article.Title} \u2013 ` : "") + "tudinh.xyz";
   return (
     <html lang={props.article.Language || "en"}>
       <head>
@@ -15,15 +27,7 @@ export default function PageComponent(props: { article: Article }) {
         <link rel="stylesheet" href="/css/article.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" href={"https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display&display=swap"} />
-        {props.article.Modules?.map(mod => {
-          const m = /^CSS\.([a-zA-Z0-9]+)$/.exec(mod);
-          if (m?.length === 2) {
-            return <link rel="stylesheet" href={`/css/${m[1]}.css`} />;
-          }
-        })}
-        {props.article.Modules?.includes("Dynamic") && (
-          <script src="/js/dynamic.js" async defer />
-        )}
+        {props.article.Modules?.map(mod => renderModule(mod))}
       </head>
       <body>
         <main role="main" id="root">
