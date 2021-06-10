@@ -9,11 +9,11 @@ ARTICLES_JSON_TOUCH=$(patsubst articles/%.yaml,public/json/%.json.touch,$(ARTICL
 CSS_SOURCES=$(wildcard css/[!_]*.css)
 CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
 
-RENDERER_SOURCES=$(wildcard renderer/*.{ts,tsx})
-NODE_SOURCES=$(wildcard node/*.{ts,tsx})
+RENDERER_SOURCES=$(wildcard renderer/*)
+NODE_SOURCES=$(wildcard node/*)
 
-STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES)
-DYNAMIC_SOURCES=$(RENDERER_SOURCES)
+STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) yarn.lock
+DYNAMIC_SOURCES=$(RENDERER_SOURCES) yarn.lock
 
 # general prep
 
@@ -55,7 +55,7 @@ articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.h
 public/json/.guard:
 	@touch $@
 
-public/json/%.json: articles/%.yaml render.js schema.json $(STATIC_SOURCES) | public/json/.guard
+public/json/%.json: articles/%.yaml render.js schema.json | public/json/.guard
 	@printf JSON\\t$@\\n
 	@$(NODE) render.js --format json --private $< $@
 
