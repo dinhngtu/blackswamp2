@@ -110,12 +110,12 @@ export default function HALComponent(props: HALComponentProps) {
 
   function renderBibGroup(groupType: string, bg: BibGroup) {
     return (
-      <Fragment key={groupType}>
+      <div key={groupType} id={groupType}>
         <h2>{bg.name}</h2>
         <ul class="bibGroup">{bg.bibs
           .sort((a, b) => -(getBibDate(a).localeCompare(getBibDate(b))))
           .map((bib, index) => renderBib(bib, index))}</ul>
-      </Fragment>
+      </div>
     );
   }
 
