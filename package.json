@@ -1,7 +1,7 @@
 {
   "name": "blackswamp2",
   "version": "1.0.0",
-  "license": "Proprietary",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "make",
