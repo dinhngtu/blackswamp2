@@ -21,7 +21,7 @@
     "clean-css-cli": "^5.4.1",
     "dompurify": "^2.3.3",
     "jsdom": "^18.0.0",
-    "marked": "^3.0.7",
+    "marked": "^4.0.10",
     "minimist": "^1.2.5",
     "preact": "^10.5.15",
     "preact-render-to-string": "^5.1.19",
