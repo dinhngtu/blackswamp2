@@ -20,10 +20,12 @@ DYNAMIC_SOURCES=$(RENDERER_SOURCES) yarn.lock
 all: articles articles_json css js
 
 schema.json: tsconfig.static.json renderer/Article.ts
-	./node_modules/.bin/typescript-json-schema $< Article -o $@
+	@printf SCHEMA\\t$@\\n
+	@./node_modules/.bin/typescript-json-schema $< Article -o $@
 
 render.js: rollup.static.config.js $(STATIC_SOURCES)
-	./node_modules/.bin/rollup -c $<
+	@printf JSS\\t$@\\n
+	@./node_modules/.bin/rollup -c $<
 
 .SUFFIXES:
 
@@ -69,12 +71,14 @@ articles_json: $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
 # css/js
 
 public/css/%.css: css/%.css
-	./node_modules/.bin/cleancss $< -o $@
+	@printf CSS\\t$@\\n
+	@$(NODE) cleancss.js $< -o $@
 
 css: $(CSS_OBJ)
 
 public/js/dynamic.js: rollup.dynamic.config.js $(DYNAMIC_SOURCES)
-	./node_modules/.bin/rollup -c $<
+	@printf JSD\\t$@\\n
+	@./node_modules/.bin/rollup -c $<
 
 js: public/js/dynamic.js
 

@@ -1,5 +1,5 @@
 import { Fragment } from "preact";
-import marked from "marked";
+import { marked } from "marked";
 import purifier from "purifier";
 import { HALPublicationsSection, MarkdownSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
