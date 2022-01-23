@@ -50,8 +50,9 @@ if (args.format === "html") {
 
   const outfd = fs.openSync(outfile, "w")
   fs.writeSync(outfd, "<!doctype html>");
-  fs.writeSync(outfd, dom)
-  fs.writeSync(outfd, "<!--blackswamp2-->")
+  fs.writeSync(outfd, dom);
+  fs.writeSync(outfd, "<!--blackswamp2-->");
+  fs.close(outfd);
 
 } else if (args.format === "json") {
   fs.writeFileSync(outfile, JSON.stringify(obj));
