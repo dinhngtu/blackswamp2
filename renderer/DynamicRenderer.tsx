@@ -4,7 +4,7 @@ import ArticleComponent from "./ArticleComponent";
 (async () => {
   const path = window.location.pathname.replace(/\/+$/, '');
   const slash = path.lastIndexOf("/");
-  const id = slash >= 0 ? path.substr(slash + 1) : null;
+  const id = slash >= 0 ? path.substring(slash + 1) : null;
   if (!id) {
     return;
   }
