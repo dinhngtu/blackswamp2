@@ -131,6 +131,8 @@ img {
 
 p {
   text-align: justify;
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 @media (max-width: 767px) {
