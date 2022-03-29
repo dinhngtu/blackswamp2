@@ -22,7 +22,7 @@
     "dompurify": "^2.3.4",
     "jsdom": "^19.0.0",
     "marked": "^4.0.10",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "preact": "^10.6.4",
     "preact-render-to-string": "^5.1.19",
     "rollup": "^2.66.0",
