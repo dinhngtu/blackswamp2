@@ -12,8 +12,8 @@ export interface HALComponentProps {
 }
 
 const docTypes: { [K: string]: number } = {
-  ART: 1,
-  COMM: 2,
+  COMM: 1,
+  ART: 2,
   OUV: 3,
   COUV: 4,
   DOUV: 5,
