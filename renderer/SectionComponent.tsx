@@ -1,8 +1,9 @@
 import { Fragment } from "preact";
 import { marked } from "marked";
 import purifier from "purifier";
-import { HALPublicationsSection, MarkdownSection, Section, YoutubeSection } from "./Article";
+import { HALPublicationsSection, MarkdownSection, PrivacySettingsSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
+import PrivacySettingsComponent, { usePrivacyPrompt } from "./PrivacySettingsComponent";
 
 marked.setOptions({
   headerIds: false,
@@ -20,19 +21,23 @@ function isHALSection(s: Section): s is HALPublicationsSection {
   return (s as HALPublicationsSection).IdHAL !== undefined;
 }
 
+function isPrivacySettingsSection(s: Section): s is PrivacySettingsSection {
+  return (s as PrivacySettingsSection).PrivacySettings !== undefined;
+}
+
 function MarkdownSectionComponent(s: MarkdownSection) {
   return <div dangerouslySetInnerHTML={{ __html: purifier.sanitize(marked(s.Markdown)) }} />;
 }
 
 function YoutubeSectionComponent(s: YoutubeSection) {
-  let safeYtid;
+  let safeYtid: string | null = null;
   if (/^[a-zA-Z0-9-_]{11}/.test(s.YoutubeId)) {
     safeYtid = s.YoutubeId;
   }
-  return (
-    <>
-      {s.Title && <h2>{s.Title}</h2>}
-      {safeYtid && (
+  const [youtubePermission, _, youtubePrompt] = usePrivacyPrompt("youtube", "YouTube");
+  const render = () => {
+    if (youtubePermission === "true") {
+      return (
         <div className="embed-youtube-wrapper">
           <iframe
             className="embed-youtube"
@@ -41,7 +46,15 @@ function YoutubeSectionComponent(s: YoutubeSection) {
             allowFullScreen>
           </iframe>
         </div>
-      )}
+      );
+    } else {
+      return <p>{youtubePrompt}</p>
+    }
+  };
+  return (
+    <>
+      {s.Title && <h2>{s.Title}</h2>}
+      {safeYtid && render()}
     </>
   );
 }
@@ -53,6 +66,8 @@ export default function SectionComponent(s: Section) {
     return YoutubeSectionComponent(s);
   } else if (isHALSection(s)) {
     return HALComponent(s);
+  } else if (isPrivacySettingsSection(s)) {
+    return PrivacySettingsComponent(s);
   } else {
     return <Fragment />;
   }
