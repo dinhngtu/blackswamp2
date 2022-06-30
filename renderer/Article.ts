@@ -11,6 +11,9 @@ export type YoutubeSection = Section & {
 export type HALPublicationsSection = Section & {
   IdHAL: string;
 };
+export type PrivacySettingsSection = Section & {
+  PrivacySettings: string;
+};
 
 export interface Article {
   id: string;
@@ -20,7 +23,7 @@ export interface Article {
   Description?: string;
   Modules?: Module[];
   Privacy?: ArticlePrivacy;
-  Sections?: (MarkdownSection | YoutubeSection | HALPublicationsSection)[];
+  Sections?: (MarkdownSection | YoutubeSection | HALPublicationsSection | PrivacySettingsSection)[];
   _ts?: number;
 }
 export interface Section {

@@ -1,15 +1,13 @@
 import { useEffect, useState } from "preact/hooks";
 import { Fragment } from "preact";
 import purifier from "purifier";
+import { HALPublicationsSection } from "./Article";
+import { usePrivacyPrompt } from "./PrivacySettingsComponent";
 
 interface BibGroup {
   name: string;
   bibs: Element[];
 };
-
-export interface HALComponentProps {
-  IdHAL: string;
-}
 
 const docTypes: { [K: string]: number } = {
   COMM: 1,
@@ -36,11 +34,16 @@ function getGroupOrder(type: string) {
   return docTypes[type] || 1000;
 }
 
-export default function HALComponent(props: HALComponentProps) {
+export default function HALComponent(props: HALPublicationsSection) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [haldoc, setHALDocument] = useState<XMLDocument | null>(null);
+  const [halPermission, _, halPrompt] = usePrivacyPrompt("hal", "HAL");
+
   useEffect(() => {
+    if (halPermission !== "true") {
+      return;
+    }
     (async () => {
       try {
         if (!/^[a-zA-Z0-9\-]+$/.test(props.IdHAL)) {
@@ -59,9 +62,13 @@ export default function HALComponent(props: HALComponentProps) {
         setError(true);
       }
     })();
-  }, []);
+  }, [halPermission]);
 
-  if (error) {
+  if (halPermission === "false") {
+    return <p>{halPrompt}</p>
+  } else if (halPermission === "unset") {
+    return <p>{halPrompt}</p>
+  } else if (error) {
     return <p>Error!</p>
   } else if (loading) {
     return <p>Loading&hellip;</p>
@@ -101,7 +108,7 @@ export default function HALComponent(props: HALComponentProps) {
     const refHtml = bib.querySelector('publicationStmt>idno[type="halRefHtml"]')?.textContent;
     return (
       <li class="bib" key={key}>
-        { uri ? <a class="bibTitle" href={uri}>{title}</a> : <p class="bibTitle">{title}</p>}
+        {uri ? <a class="bibTitle" href={uri}>{title}</a> : <p class="bibTitle">{title}</p>}
         <p class="bibAuthors">{renderAuthors(bib)}</p>
         {refHtml && <p class="bibRef" dangerouslySetInnerHTML={{ __html: purifier.sanitize(refHtml) }} />}
       </li>
