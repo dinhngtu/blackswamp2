@@ -11,8 +11,12 @@ export type YoutubeSection = Section & {
 export type HALPublicationsSection = Section & {
   IdHAL: string;
 };
+export type PrivacySetting = {
+  Name: string;
+  DisplayName: string;
+};
 export type PrivacySettingsSection = Section & {
-  PrivacySettings: string;
+  PrivacySettings: PrivacySetting[];
 };
 
 export interface Article {
