@@ -1,31 +1,27 @@
-import { marked } from "marked";
-import purifier from "purifier";
-import { HALPublicationsSection, MarkdownSection, PrivacySettingsSection, Section, YoutubeSection } from "./Article";
+import { HALPublicationsSection, HtmlSection, MarkdownSection, PrivacySettingsSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
 import PrivacySettingsComponent, { usePrivacyPrompt } from "./PrivacySettingsComponent";
+import { MarkdownSectionComponent, HtmlSectionComponent } from "DualRenderer";
+import { isClient } from "./Util";
 
-marked.setOptions({
-  headerIds: false,
-});
-
-function isMarkdownSection(s: Section): s is MarkdownSection {
+export function isMarkdownSection(s: Section): s is MarkdownSection {
   return (s as MarkdownSection).Markdown !== undefined;
 }
 
-function isYoutubeSection(s: Section): s is YoutubeSection {
+export function isHtmlSection(s: Section): s is HtmlSection {
+  return (s as HtmlSection).Html !== undefined;
+}
+
+export function isYoutubeSection(s: Section): s is YoutubeSection {
   return (s as YoutubeSection).YoutubeId !== undefined;
 }
 
-function isHALSection(s: Section): s is HALPublicationsSection {
+export function isHALSection(s: Section): s is HALPublicationsSection {
   return (s as HALPublicationsSection).IdHAL !== undefined;
 }
 
-function isPrivacySettingsSection(s: Section): s is PrivacySettingsSection {
+export function isPrivacySettingsSection(s: Section): s is PrivacySettingsSection {
   return (s as PrivacySettingsSection).PrivacySettings !== undefined;
-}
-
-function MarkdownSectionComponent(s: MarkdownSection) {
-  return <div dangerouslySetInnerHTML={{ __html: purifier.sanitize(marked(s.Markdown)) }} />;
 }
 
 function YoutubeSectionComponent(s: YoutubeSection) {
@@ -62,8 +58,10 @@ function YoutubeSectionComponent(s: YoutubeSection) {
 }
 
 export default function SectionComponent(s: Section) {
-  if (isMarkdownSection(s)) {
+  if (!isClient() && isMarkdownSection(s)) {
     return MarkdownSectionComponent(s);
+  } else if (isClient() && isHtmlSection(s)) {
+    return HtmlSectionComponent(s);
   } else if (isYoutubeSection(s)) {
     return YoutubeSectionComponent(s);
   } else if (isHALSection(s)) {
