@@ -34,7 +34,10 @@ function YoutubeSectionComponent(s: YoutubeSection) {
   if (/^[a-zA-Z0-9-_]{11}/.test(s.YoutubeId)) {
     safeYtid = s.YoutubeId;
   }
-  const [youtubePermission, _, youtubePrompt] = usePrivacyPrompt("youtube", "YouTube");
+  const [youtubePermission, _, youtubePrompt] = usePrivacyPrompt({
+    Name: "youtube",
+    DisplayName: "YouTube",
+  });
   const render = () => {
     if (youtubePermission === "true") {
       return (
