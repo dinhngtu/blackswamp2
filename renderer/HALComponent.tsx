@@ -1,5 +1,4 @@
 import { useEffect, useState } from "preact/hooks";
-import { Fragment } from "preact";
 import purifier from "purifier";
 import { HALPublicationsSection } from "./Article";
 import { usePrivacyPrompt } from "./PrivacySettingsComponent";
@@ -97,10 +96,10 @@ export default function HALComponent(props: HALPublicationsSection) {
         return auName;
       }
     }).map((auName, index) => (
-      <Fragment>
+      <>
         {index > 0 && ", "}
         {auName}
-      </Fragment>
+      </>
     ));
   }
 
@@ -143,5 +142,5 @@ export default function HALComponent(props: HALPublicationsSection) {
   const renderedBibGroups = Object.entries(bibGroups)
     .sort((a, b) => getGroupOrder(a[0]) - getGroupOrder(b[0]))
     .map(([g, bib]) => renderBibGroup(g, bib));
-  return <Fragment>{renderedBibGroups}</Fragment>;
+  return <>{renderedBibGroups}</>;
 }

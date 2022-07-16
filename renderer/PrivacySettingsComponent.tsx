@@ -1,5 +1,4 @@
 import { useEffect, useState } from "preact/hooks";
-import { Fragment } from "preact";
 import { PrivacySetting, PrivacySettingsSection } from "./Article";
 import { useLocalStorage } from "./Util";
 
@@ -23,9 +22,9 @@ export function usePrivacyPermission(setting: PrivacySetting): [PrivacyPermissio
 export function usePrivacyPrompt(setting: PrivacySetting) {
   const [value, setValue] = usePrivacyPermission(setting);
   const prompt = (
-    <Fragment>
+    <>
       <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {setting.DisplayName}. You can change your preferences later in the <a href="/articles/privacy.html">Privacy</a> page.
-    </Fragment>
+    </>
   );
   return [value, setValue, prompt];
 }
