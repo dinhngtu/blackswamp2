@@ -21,7 +21,7 @@ export type PrivacySetting = {
 export type PrivacySettingsSection = Section & {
   PrivacySettings: PrivacySetting[];
 };
-export type AllSections = MarkdownSection | HtmlSection | YoutubeSection | HALPublicationsSection | PrivacySettingsSection;
+export type AllSections = Section | MarkdownSection | HtmlSection | YoutubeSection | HALPublicationsSection | PrivacySettingsSection;
 
 export interface Article {
   id: string;
