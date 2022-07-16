@@ -1,4 +1,3 @@
-import { Fragment } from "preact";
 import { marked } from "marked";
 import purifier from "purifier";
 import { HALPublicationsSection, MarkdownSection, PrivacySettingsSection, Section, YoutubeSection } from "./Article";
@@ -72,6 +71,6 @@ export default function SectionComponent(s: Section) {
   } else if (isPrivacySettingsSection(s)) {
     return PrivacySettingsComponent(s);
   } else {
-    return <Fragment />;
+    return <></>;
   }
 }
