@@ -1,0 +1,16 @@
+id: privacy
+Title: Privacy policy
+Privacy: Public
+Modules:
+  - JS.dynamic
+Sections:
+  - Markdown: |
+      This website is hosted on GitHub Pages, which collects personal information for purposes described in the [GitHub Privacy Policy](https://docs.github.com/en/github/site-policy/github-privacy-statement#github-pages).
+
+      Additionally, this website makes use of some third-party services. You can choose whether you want to use each service using the following check boxes:
+  - PrivacySettings:
+      - Name: hal
+        DisplayName: HAL Articles API
+      - Name: youtube
+        DisplayName: YouTube
+_ts: 1657965600
