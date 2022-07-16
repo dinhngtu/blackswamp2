@@ -7,7 +7,7 @@ export function articleEffectivePrivacy(art: Article) {
 
 export function isArticlePrivate(art: Article) {
   const ap = articleEffectivePrivacy(art);
-  return ap === "Private" || ap === "Hidden";
+  return ap === "Private";
 }
 
 export function sectionEffectivePrivacy(s: Section) {
@@ -22,7 +22,7 @@ export function isSectionPrivate(s: Section) {
 export function isSectionViewable(art: Article, s: Section, priv: boolean) {
   const ap = articleEffectivePrivacy(art);
   const sp = sectionEffectivePrivacy(s);
-  return priv || ap === "Public" || (ap === "Mixed" && sp === "Public");
+  return priv || (ap === "Mixed" && sp === "Public");
 }
 
 export default function ArticleComponent(props: { article?: Article, priv?: boolean }) {

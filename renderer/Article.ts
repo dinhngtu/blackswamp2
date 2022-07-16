@@ -1,5 +1,5 @@
 export type Module = "Dynamic" | string;
-export type ArticlePrivacy = "Public" | "Mixed" | "Private" | "Hidden";
+export type ArticlePrivacy = "Mixed" | "Private";
 export type SectionPrivacy = "Public" | "Private";
 export type MarkdownSection = Section & {
   Markdown: string;

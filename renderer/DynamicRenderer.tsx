@@ -1,4 +1,4 @@
-import { hydrate } from "preact";
+import { render } from "preact";
 import ArticleComponent from "./ArticleComponent";
 
 (async () => {
@@ -9,7 +9,7 @@ import ArticleComponent from "./ArticleComponent";
     return;
   }
   const article = await (await fetch(`/json/${id.replace(".html", ".json")}`)).json();
-  hydrate(
+  render(
     <ArticleComponent article={article} priv />,
     document.getElementById("root") as Element);
 })();
