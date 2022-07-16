@@ -38,7 +38,7 @@ export default function HALComponent(props: HALPublicationsSection) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [haldoc, setHALDocument] = useState<XMLDocument | null>(null);
-  const [halPermission, _, halPrompt] = usePrivacyPrompt("hal", "HAL");
+  const [halPermission, _, halPrompt] = usePrivacyPrompt("hal", "HAL Articles API");
 
   useEffect(() => {
     if (halPermission !== "true") {

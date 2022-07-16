@@ -26,8 +26,8 @@ export function usePrivacyPrompt(name: string, displayName: string) {
     <Fragment>
       <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {displayName}. You can change your preferences later in the <a href="/articles/privacy.html">Privacy</a> page.
     </Fragment>
-  )
-  return [value, setValue, prompt]
+  );
+  return [value, setValue, prompt];
 }
 
 export default function PrivacySettingsComponent(_props: PrivacySettingsSection) {
@@ -40,7 +40,7 @@ export default function PrivacySettingsComponent(_props: PrivacySettingsSection)
         setter(e.target.checked);
       }
     }
-  }
+  };
 
   const checkbox = (value: PrivacyPermission, setter: (value: boolean) => void, displayName: string) => (
     <label>
