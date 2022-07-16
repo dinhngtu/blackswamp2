@@ -42,19 +42,23 @@ export default function PrivacySettingsComponent(_props: PrivacySettingsSection)
     }
   }
 
-  return (
-    <div>
-      <div>
-        <input type="checkbox" id="permission-hal"
-          checked={halPermission === "true"} onChange={updater(setHALPermission)} />
-        <label for="permission-hal">HAL</label>
-      </div>
-
-      <div>
-        <input type="checkbox" id="permission-youtube"
-          checked={youtubePermission === "true"} onChange={updater(setYoutubePermission)} />
-        <label for="permission-youtube">YouTube</label>
-      </div>
-    </div>
+  const checkbox = (value: PrivacyPermission, setter: (value: boolean) => void, displayName: string) => (
+    <label>
+      <input
+        type="checkbox"
+        checked={value === "true"}
+        disabled={value === "loading"}
+        onChange={updater(setter)} />
+      {displayName}
+    </label>
   );
+
+  return <>
+    <div>
+      {checkbox(halPermission, setHALPermission, "HAL Articles API")}
+    </div>
+    <div>
+      {checkbox(youtubePermission, setYoutubePermission, "YouTube")}
+    </div>
+  </>;
 }
