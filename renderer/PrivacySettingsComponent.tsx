@@ -21,11 +21,9 @@ export function usePrivacyPermission(setting: PrivacySetting): [PrivacyPermissio
 
 export function usePrivacyPrompt(setting: PrivacySetting) {
   const [value, setValue] = usePrivacyPermission(setting);
-  const prompt = (
-    <>
-      <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {setting.DisplayName}. You can change your preferences later in the <a href="/articles/privacy.html">Privacy</a> page.
-    </>
-  );
+  const prompt = <>
+    &#9888;&#65039; <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {setting.DisplayName}. You can change your preferences later in the <a href="/articles/privacy.html">Privacy</a> page.
+  </>;
   return [value, setValue, prompt];
 }
 

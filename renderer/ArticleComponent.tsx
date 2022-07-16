@@ -25,7 +25,12 @@ export function isSectionViewable(art: Article, s: Section, priv: boolean) {
   return priv || (ap === "Mixed" && sp === "Public");
 }
 
-export default function ArticleComponent(props: { article?: Article, priv?: boolean }) {
+export interface ArticleProps {
+  article?: Article,
+  priv?: boolean,
+};
+
+export default function ArticleComponent(props: ArticleProps) {
   if (props.article === undefined) {
     return <></>;
   }

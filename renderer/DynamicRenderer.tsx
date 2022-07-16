@@ -1,15 +1,26 @@
 import { render } from "preact";
-import ArticleComponent from "./ArticleComponent";
+import { Article } from "./Article";
+import PageBodyComponent from "./PageBodyComponent";
+import ToolbarComponent from "./ToolbarComponent";
+import { getPageBaseName } from "./Util";
+
+function rerender(article: Article) {
+  render(
+    <PageBodyComponent article={article} priv />,
+    document.getElementById("root") as Element);
+}
 
 (async () => {
-  const path = window.location.pathname.replace(/\/+$/, '');
-  const slash = path.lastIndexOf("/");
-  const id = slash >= 0 ? path.substring(slash + 1) : null;
+  const id = getPageBaseName();
   if (!id) {
     return;
   }
-  const article = await (await fetch(`/json/${id.replace(".html", ".json")}`)).json();
-  render(
-    <ArticleComponent article={article} priv />,
-    document.getElementById("root") as Element);
+  try {
+    const article = await (await fetch(`/json/${id}.json`)).json();
+    rerender(article);
+  } catch {
+    render(
+      <ToolbarComponent showToolbar onUnlock={rerender} />,
+      document.getElementById("toolbar") as Element);
+  }
 })();

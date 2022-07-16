@@ -1,6 +1,8 @@
 id: "404"
 Title: Not found
-Modules: ["JS.dynamic"] # needed for loading private articles
+Modules:
+  - JS.dynamic
+  - Secret
 Sections:
   - Markdown: |
       Looking for something?
