@@ -3,9 +3,10 @@ import HALComponent from "./HALComponent";
 import PrivacySettingsComponent, { usePrivacyPrompt } from "./PrivacySettingsComponent";
 import { filterSection } from "DualRenderer";
 import { isHtmlSection, isYoutubeSection, isHALSection, isPrivacySettingsSection } from "./Sections";
+import purifier from "purifier";
 
 function HtmlSectionComponent(s: HtmlSection) {
-  return <div dangerouslySetInnerHTML={{ __html: s.Html }} />;
+  return <div dangerouslySetInnerHTML={{ __html: purifier.sanitize(s.Html) }} />;
 }
 
 function YoutubeSectionComponent(s: YoutubeSection) {
