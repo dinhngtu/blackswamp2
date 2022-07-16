@@ -4,6 +4,9 @@ export type SectionPrivacy = "Public" | "Private";
 export type MarkdownSection = Section & {
   Markdown: string;
 };
+export type HtmlSection = Section & {
+  Html: string;
+};
 export type YoutubeSection = Section & {
   YoutubeId: string;
   Title?: string;
@@ -18,6 +21,7 @@ export type PrivacySetting = {
 export type PrivacySettingsSection = Section & {
   PrivacySettings: PrivacySetting[];
 };
+export type AllSections = MarkdownSection | HtmlSection | YoutubeSection | HALPublicationsSection | PrivacySettingsSection;
 
 export interface Article {
   id: string;
@@ -27,7 +31,7 @@ export interface Article {
   Description?: string;
   Modules?: Module[];
   Privacy?: ArticlePrivacy;
-  Sections?: (MarkdownSection | YoutubeSection | HALPublicationsSection | PrivacySettingsSection)[];
+  Sections?: AllSections[];
   _ts?: number;
 }
 export interface Section {

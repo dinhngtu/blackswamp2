@@ -4,6 +4,9 @@
     "paths": {
       "purifier": [
         "node/purifier.ts"
+      ],
+      "DualRenderer": [
+        "node/DualRenderer.tsx"
       ]
     }
   },
