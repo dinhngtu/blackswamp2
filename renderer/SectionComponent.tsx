@@ -1,27 +1,11 @@
-import { HALPublicationsSection, HtmlSection, MarkdownSection, PrivacySettingsSection, Section, YoutubeSection } from "./Article";
+import { HtmlSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
 import PrivacySettingsComponent, { usePrivacyPrompt } from "./PrivacySettingsComponent";
-import { MarkdownSectionComponent, HtmlSectionComponent } from "DualRenderer";
-import { isClient } from "./Util";
+import { filterSection } from "DualRenderer";
+import { isHtmlSection, isYoutubeSection, isHALSection, isPrivacySettingsSection } from "./Sections";
 
-export function isMarkdownSection(s: Section): s is MarkdownSection {
-  return (s as MarkdownSection).Markdown !== undefined;
-}
-
-export function isHtmlSection(s: Section): s is HtmlSection {
-  return (s as HtmlSection).Html !== undefined;
-}
-
-export function isYoutubeSection(s: Section): s is YoutubeSection {
-  return (s as YoutubeSection).YoutubeId !== undefined;
-}
-
-export function isHALSection(s: Section): s is HALPublicationsSection {
-  return (s as HALPublicationsSection).IdHAL !== undefined;
-}
-
-export function isPrivacySettingsSection(s: Section): s is PrivacySettingsSection {
-  return (s as PrivacySettingsSection).PrivacySettings !== undefined;
+function HtmlSectionComponent(s: HtmlSection) {
+  return <div dangerouslySetInnerHTML={{ __html: s.Html }} />;
 }
 
 function YoutubeSectionComponent(s: YoutubeSection) {
@@ -57,10 +41,9 @@ function YoutubeSectionComponent(s: YoutubeSection) {
   );
 }
 
-export default function SectionComponent(s: Section) {
-  if (!isClient() && isMarkdownSection(s)) {
-    return MarkdownSectionComponent(s);
-  } else if (isClient() && isHtmlSection(s)) {
+export default function SectionComponent(rawSection: Section) {
+  const s = filterSection(rawSection);
+  if (isHtmlSection(s)) {
     return HtmlSectionComponent(s);
   } else if (isYoutubeSection(s)) {
     return YoutubeSectionComponent(s);

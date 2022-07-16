@@ -1,9 +1,5 @@
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
-export function isClient() {
-  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-}
-
 export function useLocalStorage(key: string): [string | null, StateUpdater<string | null>] {
   const [value, setValue] = useState(() => {
     if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
