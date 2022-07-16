@@ -1,5 +1,6 @@
 import { Article } from "./Article";
-import ArticleComponent from "./ArticleComponent";
+import { titleSuffix } from "./Config";
+import PageBodyComponent from "./PageBodyComponent";
 
 function renderModule(mod: string) {
   const css = /^CSS\.([a-zA-Z0-9]+)$/.exec(mod);
@@ -14,7 +15,7 @@ function renderModule(mod: string) {
 }
 
 export default function PageComponent(props: { article: Article }) {
-  const pageTitle = (props.article.Title ? `${props.article.Title} \u2013 ` : "") + "tudinh.xyz";
+  const pageTitle = (props.article.Title ? `${props.article.Title} \u2013 ` : "") + titleSuffix;
   return (
     <html lang={props.article.Language || "en"}>
       <head>
@@ -27,13 +28,10 @@ export default function PageComponent(props: { article: Article }) {
         <link rel="stylesheet" href="/css/article.css" />
         {props.article.Modules?.map(mod => renderModule(mod))}
       </head>
-      <body>
-        <main role="main" id="root">
-          <ArticleComponent article={props.article} />
-        </main>
-        <footer>
-          <a href="/articles/privacy.html">Privacy</a>
-        </footer>
+      <body id="root">
+        <PageBodyComponent
+          article={props.article}
+          showToolbar={props.article.Modules?.includes("Secret")} />
       </body>
     </html>
   );

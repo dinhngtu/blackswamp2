@@ -1,5 +1,12 @@
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
+export function getPageBaseName(pathname: string = window.location.pathname) {
+  const path = pathname.replace(/\/+$/, '');
+  const slash = path.lastIndexOf("/");
+  const id = slash >= 0 ? path.substring(slash + 1) : null;
+  return id?.replace(/\.html$/, '');
+}
+
 export function useLocalStorage(key: string): [string | null, StateUpdater<string | null>] {
   const [value, setValue] = useState(() => {
     if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
