@@ -1,4 +1,4 @@
-.bibGroup {
+.bib-group {
   padding: 0;
 }
 
@@ -12,11 +12,11 @@
   text-align: left;
 }
 
-.bibTitle {
+.bib-title {
   font-weight: bold;
 }
 
-.bibRef {
+.bib-ref {
   font-size: 0.8rem;
   line-height: 1.2rem;
 }

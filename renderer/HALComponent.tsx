@@ -95,12 +95,10 @@ export default function HALComponent(props: HALPublicationsSection) {
       } else {
         return auName;
       }
-    }).map((auName, index) => (
-      <>
-        {index > 0 && ", "}
-        {auName}
-      </>
-    ));
+    }).map((auName, index) => <>
+      {index > 0 && ", "}
+      {auName}
+    </>);
   }
 
   function renderBib(bib: Element, index: number) {
@@ -110,9 +108,9 @@ export default function HALComponent(props: HALPublicationsSection) {
     const refHtml = bib.querySelector('publicationStmt>idno[type="halRefHtml"]')?.textContent;
     return (
       <li class="bib" key={key}>
-        {uri ? <a class="bibTitle" href={uri}>{title}</a> : <p class="bibTitle">{title}</p>}
-        <p class="bibAuthors">{renderAuthors(bib)}</p>
-        {refHtml && <p class="bibRef" dangerouslySetInnerHTML={{ __html: purifier.sanitize(refHtml) }} />}
+        {uri ? <a class="bib-title" href={uri}>{title}</a> : <p class="bibTitle">{title}</p>}
+        <p class="bib-authors">{renderAuthors(bib)}</p>
+        {refHtml && <p class="bib-ref" dangerouslySetInnerHTML={{ __html: purifier.sanitize(refHtml) }} />}
       </li>
     );
   }
@@ -121,9 +119,11 @@ export default function HALComponent(props: HALPublicationsSection) {
     return (
       <div key={groupType} id={groupType}>
         <h2>{bg.name}</h2>
-        <ul class="bibGroup">{bg.bibs
-          .sort((a, b) => -(getBibDate(a).localeCompare(getBibDate(b))))
-          .map((bib, index) => renderBib(bib, index))}</ul>
+        <ul class="bib-group">
+          {bg.bibs
+            .sort((a, b) => -(getBibDate(a).localeCompare(getBibDate(b))))
+            .map((bib, index) => renderBib(bib, index))}
+        </ul>
       </div>
     );
   }
