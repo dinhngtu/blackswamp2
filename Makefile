@@ -79,6 +79,7 @@ css: $(CSS_OBJ)
 public/js/dynamic.js: rollup.dynamic.config.js $(DYNAMIC_SOURCES)
 	@printf JSD\\t$@\\n
 	@./node_modules/.bin/rollup -c $<
+	@./node_modules/.bin/terser -o $@ -c -m -- $@
 
 js: public/js/dynamic.js
 
