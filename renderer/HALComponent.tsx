@@ -58,7 +58,12 @@ export default function HALComponent(props: HALPublicationsSection) {
           return;
         }
         const parser = new DOMParser();
-        setHALDocument(parser.parseFromString(await resp.text(), "text/xml"));
+        const doc = parser.parseFromString(await resp.text(), "text/xml");
+        if (doc.querySelector("parsererror")) {
+          setError(true);
+          return;
+        }
+        setHALDocument(doc);
         setLoading(false);
       } catch {
         setError(true);
