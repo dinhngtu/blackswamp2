@@ -10,7 +10,7 @@ import { renderArticle } from "./NodeRenderer";
 import { filterSection } from "./DualRenderer";
 
 const argopts = {
-  boolean: ["no-validate", "private", "help"],
+  boolean: ["no-validate", "private", "touch", "help"],
   default: {
     "schema": "./schema.json",
     "format": "html",
@@ -36,6 +36,15 @@ if (!args["no-validate"] && !validator(obj)) {
 }
 
 if (!args.private && isArticlePrivate(obj)) {
+  process.exit(0);
+}
+
+if (args.touch) {
+  const time = new Date();
+  try {
+    fs.utimesSync(outfile, time, time);
+  } catch {
+  }
   process.exit(0);
 }
 

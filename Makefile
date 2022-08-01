@@ -35,13 +35,14 @@ render.js: rollup.static.config.js $(STATIC_SOURCES)
 public/articles/.guard:
 	@touch $@
 
-public/articles/%.html: articles/%.yaml render.js schema.json $(STATIC_SOURCES) | public/articles/.guard
+public/articles/%.html: articles/%.yaml render.js schema.json | public/articles/.guard
 	@printf HTML\\t$@\\n
 	@$(NODE) render.js $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
-$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: | public/articles/.guard
-	@touch -c $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@)
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml render.js schema.json | public/articles/.guard
+	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
+	@touch -c -r $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@) 2>/dev/null || true
 
 public/%.html: public/articles/%.html
 	@printf INDEX\\t$@\\n
@@ -86,16 +87,16 @@ js: public/js/dynamic.js
 # referenced deps
 
 rollup.static.config.js: tsconfig.static.json
-	touch $@
+	@touch $@
 
 tsconfig.static.json: tsconfig.base.json
-	touch $@
+	@touch $@
 
 rollup.dynamic.config.js: tsconfig.dynamic.json
-	touch $@
+	@touch $@
 
 tsconfig.dynamic.json: tsconfig.base.json
-	touch $@
+	@touch $@
 
 # clean
 
