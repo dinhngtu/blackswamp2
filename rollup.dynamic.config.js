@@ -2,7 +2,6 @@ import ts from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import replace from '@rollup/plugin-replace';
-import { terser } from "rollup-plugin-terser";
 import typescript from "typescript";
 
 export default {
@@ -22,6 +21,5 @@ export default {
       preventAssignment: true
     }),
     commonjs({ sourceMap: false }),
-    terser()
   ]
 };
