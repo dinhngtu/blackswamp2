@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import purifier from "purifier";
+import xss from "xss";
 import { HALPublicationsSection } from "./Article";
 import { usePrivacyPrompt } from "./PrivacySettingsComponent";
 
@@ -115,7 +115,7 @@ export default function HALComponent(props: HALPublicationsSection) {
       <li class="bib" key={key}>
         {uri ? <a class="bib-title" href={uri}>{title}</a> : <p class="bibTitle">{title}</p>}
         <p class="bib-authors">{renderAuthors(bib)}</p>
-        {refHtml && <p class="bib-ref" dangerouslySetInnerHTML={{ __html: purifier.sanitize(refHtml) }} />}
+        {refHtml && <p class="bib-ref" dangerouslySetInnerHTML={{ __html: xss(refHtml) }} />}
       </li>
     );
   }
