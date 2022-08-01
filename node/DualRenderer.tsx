@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import purifier from "purifier";
+import xss from "xss";
 import { AllSections } from "../renderer/Article";
 import { isHtmlSection, isMarkdownSection } from "../renderer/Sections";
 
@@ -8,7 +8,7 @@ marked.setOptions({
 });
 
 export function renderMarkdown(md: string) {
-  return purifier.sanitize(marked(md));
+  return xss(marked(md));
 };
 
 export function filterSection(s: AllSections): AllSections {

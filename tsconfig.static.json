@@ -2,9 +2,6 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "purifier": [
-        "node/purifier.ts"
-      ],
       "DualRenderer": [
         "node/DualRenderer.tsx"
       ]
