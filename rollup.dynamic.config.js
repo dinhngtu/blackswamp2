@@ -1,7 +1,6 @@
 import ts from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import replace from '@rollup/plugin-replace';
 import typescript from "typescript";
 
 export default {
@@ -16,10 +15,6 @@ export default {
       tsconfig: "tsconfig.dynamic.json"
     }),
     nodeResolve({ browser: true }),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      preventAssignment: true
-    }),
     commonjs({ sourceMap: false }),
   ]
 };
