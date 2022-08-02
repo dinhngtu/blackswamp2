@@ -21,7 +21,7 @@ all: articles articles_json css js
 
 schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
-	@./node_modules/.bin/typescript-json-schema $< Article -o $@
+	@$(NODE) generate-schema.js $< Article $@
 
 render.js: rollup.static.config.js $(STATIC_SOURCES)
 	@printf JSS\\t$@\\n
