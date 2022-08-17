@@ -2,6 +2,7 @@
   --bg: #eee;
   --fg: #000;
   --link: #00b;
+  --link-active: #731616;
   --link-visited: #461673;
   --border: #bbb;
 }
@@ -11,6 +12,7 @@
     --bg: #1a1a1a;
     --fg: #e6e6e6;
     --link: #bbf;
+    --link-active: #f1b6b6;
     --link-visited: #d4b6f1;
     --border: #444;
   }
@@ -21,6 +23,7 @@ html {
   color: var(--fg);
   background-color: var(--bg);
   box-sizing: border-box;
+  font-family: 'Segoe UI', 'Noto Sans', 'Helvetica', 'Arial', 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -32,7 +35,6 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', 'Noto Sans', 'Helvetica', 'Arial', 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -124,6 +126,15 @@ a {
 
 a:visited {
   color: var(--link-visited);
+}
+
+a:hover,
+a:active {
+  text-decoration-thickness: 1.5px;
+}
+
+a:active {
+  color: var(--link-active);
 }
 
 img {
