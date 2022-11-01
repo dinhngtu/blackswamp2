@@ -23,7 +23,7 @@ schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
 	@$(NODE) generate-schema.js $< Article $@
 
-render.js: rollup.static.config.js $(STATIC_SOURCES)
+render.js: rollup.static.config.mjs $(STATIC_SOURCES)
 	@printf JSS\\t$@\\n
 	@./node_modules/.bin/rollup -c $<
 
@@ -77,7 +77,7 @@ public/css/%.css: css/%.css
 
 css: $(CSS_OBJ)
 
-public/js/dynamic.js: rollup.dynamic.config.js $(DYNAMIC_SOURCES)
+public/js/dynamic.js: rollup.dynamic.config.mjs $(DYNAMIC_SOURCES)
 	@printf JSD\\t$@\\n
 	@./node_modules/.bin/rollup -c $<
 	@./node_modules/.bin/terser -o $@ -c -m -- $@
@@ -86,13 +86,13 @@ js: public/js/dynamic.js
 
 # referenced deps
 
-rollup.static.config.js: tsconfig.static.json
+rollup.static.config.mjs: tsconfig.static.json
 	@touch $@
 
 tsconfig.static.json: tsconfig.base.json
 	@touch $@
 
-rollup.dynamic.config.js: tsconfig.dynamic.json
+rollup.dynamic.config.mjs: tsconfig.dynamic.json
 	@touch $@
 
 tsconfig.dynamic.json: tsconfig.base.json

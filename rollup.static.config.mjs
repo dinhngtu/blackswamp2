@@ -13,6 +13,6 @@ export default {
       typescript,
       tsconfig: "tsconfig.static.json"
     }),
-    externals()
+    externals({ devDeps: true })
   ]
 };
