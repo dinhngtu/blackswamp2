@@ -20,7 +20,7 @@ function rerender(article: Article) {
     rerender(article);
   } catch {
     render(
-      <ToolbarComponent showToolbar onUnlock={rerender} />,
+      <ToolbarComponent showUnlock onUnlock={rerender} />,
       document.getElementById("toolbar") as Element);
   }
 })();

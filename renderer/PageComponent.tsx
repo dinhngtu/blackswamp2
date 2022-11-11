@@ -31,7 +31,7 @@ export default function PageComponent(props: { article: Article }) {
       <body id="root">
         <PageBodyComponent
           article={props.article}
-          showToolbar={props.article.Modules?.includes("Secret")} />
+          showUnlock={props.article.Modules?.includes("Secret")} />
       </body>
     </html>
   );

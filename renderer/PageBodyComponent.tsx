@@ -1,11 +1,9 @@
 import { useState } from "preact/hooks";
 import { Article } from "./Article";
 import ArticleComponent, { ArticleProps } from "./ArticleComponent";
-import ToolbarComponent from "./ToolbarComponent";
+import ToolbarComponent, { ToolbarOptions } from "./ToolbarComponent";
 
-export type PageBodyProps = ArticleProps & {
-  showToolbar?: boolean,
-};
+export type PageBodyProps = ArticleProps & ToolbarOptions;
 
 export default function PageBodyComponent(props: PageBodyProps) {
   const [article, setArticle] = useState<Article>();
@@ -17,7 +15,7 @@ export default function PageBodyComponent(props: PageBodyProps) {
         priv={article ? true : props.priv} />
     </main>
     <footer id="toolbar">
-      <ToolbarComponent showToolbar={props.showToolbar} onUnlock={setArticle} />
+      <ToolbarComponent showUnlock={props.showUnlock} onUnlock={setArticle} />
     </footer>
   </>;
 }

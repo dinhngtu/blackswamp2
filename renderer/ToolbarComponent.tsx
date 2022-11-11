@@ -2,8 +2,11 @@ import { Article } from "./Article";
 import { articleOriginWhitelist } from "./Config";
 import { getPageBaseName } from "./Util";
 
-export interface ToolbarProps {
-  showToolbar?: boolean,
+export interface ToolbarOptions {
+  showUnlock?: boolean,
+};
+
+export type ToolbarProps = ToolbarOptions & {
   onUnlock?: (article: Article) => void,
 };
 
@@ -34,7 +37,7 @@ export default function ToolbarComponent(props: ToolbarProps) {
   };
 
   return <>
-    {props.showToolbar && props.onUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
+    {props.showUnlock && props.onUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
     <a href="/articles/privacy.html">Privacy</a>
   </>
 }
