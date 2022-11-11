@@ -1,8 +1,14 @@
 import { useEffect, useState } from "preact/hooks";
 import { PrivacySetting, PrivacySettingsSection } from "./Article";
+import { privacyLink } from "./Config";
 import { useLocalStorage } from "./Util";
 
 type PrivacyPermission = "unset" | "loading" | "true" | "false";
+
+export type PrivacyLinkConfig = {
+  Path: string,
+  Label?: string,
+} | null;
 
 export function usePrivacyPermission(setting: PrivacySetting): [PrivacyPermission, (value: boolean) => void, string] {
   const [backValue, setBackValue] = useLocalStorage(`permission-${setting.Name}`);
@@ -19,10 +25,15 @@ export function usePrivacyPermission(setting: PrivacySetting): [PrivacyPermissio
   return [value, (v: boolean) => setBackValue(String(v)), setting.DisplayName];
 }
 
+export function usePrivacyLink() {
+  return privacyLink && <a href={privacyLink.Path}>{privacyLink.Label ?? "Privacy"}</a>;
+}
+
 export function usePrivacyPrompt(setting: PrivacySetting) {
   const [value, setValue] = usePrivacyPermission(setting);
   const prompt = <>
-    &#9888;&#65039; <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {setting.DisplayName}. You can change your preferences later in the <a href="/articles/privacy.html">Privacy</a> page.
+    &#9888;&#65039; <a href="javascript:void(0)" onClick={() => setValue(true)}>Click here</a> to allow the use of {setting.DisplayName}.
+    {privacyLink && <> You can change your preferences later in the {usePrivacyLink()} page.</>}
   </>;
   return [value, setValue, prompt];
 }

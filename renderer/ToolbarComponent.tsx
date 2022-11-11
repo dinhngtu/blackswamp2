@@ -1,5 +1,6 @@
 import { Article } from "./Article";
 import { articleOriginWhitelist } from "./Config";
+import { usePrivacyLink } from "./PrivacySettingsComponent";
 import { getPageBaseName } from "./Util";
 
 export interface ToolbarOptions {
@@ -38,6 +39,6 @@ export default function ToolbarComponent(props: ToolbarProps) {
 
   return <>
     {props.showUnlock && props.onUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
-    <a href="/articles/privacy.html">Privacy</a>
+    {usePrivacyLink()}
   </>
 }
