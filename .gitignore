@@ -25,5 +25,6 @@ yarn-error.log*
 articles/
 schema.json
 render.js
+renderer/Config.ts
 
 .vscode/*.log
