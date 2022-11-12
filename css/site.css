@@ -220,6 +220,10 @@ p {
     --border: #bbb;
   }
 
+  body {
+    padding-block-end: 0;
+  }
+
   header>h1 {
     margin-block-start: 16px;
   }
