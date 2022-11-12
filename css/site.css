@@ -143,6 +143,7 @@ img {
 
 p {
   text-align: justify;
+  -webkit-hyphens: auto;
   hyphens: auto;
   overflow-wrap: break-word;
 }
