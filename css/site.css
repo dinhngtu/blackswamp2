@@ -149,7 +149,7 @@ p {
   overflow-wrap: break-word;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   body {
     padding: 24px;
   }
@@ -174,8 +174,8 @@ p {
   body {
     padding-block-start: 96px;
     padding-block-end: 24px;
-    padding-left: 160px;
-    padding-right: 160px;
+    padding-left: 96px;
+    padding-right: 96px;
   }
 
   section,
@@ -191,6 +191,13 @@ p {
     margin-block-start: 64px;
     margin-block-end: 48px;
     font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-left: 160px;
+    padding-right: 160px;
   }
 }
 
