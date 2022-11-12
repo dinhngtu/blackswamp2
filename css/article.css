@@ -1,3 +1,31 @@
+section {
+  position: relative;
+}
+
+.permalink {
+  position: absolute;
+  height: 100%;
+  line-height: 1.5rem;
+  font-size: 0.8rem;
+  width: 2rem;
+  right: -2rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+}
+
+.permalink>a {
+  text-decoration: none;
+}
+
+.permalink>* {
+  visibility: hidden;
+}
+
+section:hover>.permalink>* {
+  visibility: visible;
+}
+
 .private {
   border-inline-start: 1px solid var(--border);
   padding-inline-start: 7px;
