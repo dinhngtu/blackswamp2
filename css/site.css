@@ -208,3 +208,28 @@ p {
     max-width: 1200px;
   }
 }
+
+@media print {
+  :root {
+    --bg: #fff;
+    --fg: #000;
+    --link: #000;
+    --link-active: #000;
+    --link-visited: #000;
+    --link-url: #00b;
+    --border: #bbb;
+  }
+
+  header>h1 {
+    margin-block-start: 16px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:after {
+    content: " [" attr(href) "]";
+    color: var(--link-url);
+  }
+}

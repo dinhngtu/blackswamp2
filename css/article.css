@@ -71,3 +71,21 @@ section:hover>.permalink>* {
     padding-block-end: 33.75%;
   }
 }
+
+@media print {
+  .permalink {
+    left: 0;
+    top: -1.2rem;
+    display: initial;
+  }
+
+  .permalink>a {
+    font-size: 0;
+  }
+
+  .permalink>a:after {
+    font-size: 0.8rem;
+    visibility: visible;
+    content: "[" attr(href) "]";
+  }
+}
