@@ -6,8 +6,7 @@ section {
   position: absolute;
   height: 100%;
   font-size: 0.8rem;
-  width: 2rem;
-  right: -2rem;
+  left: 100%;
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-start;
@@ -45,6 +44,10 @@ section:hover>.permalink>* {
 }
 
 @media (max-width: 767px) {
+  .permalink {
+    width: 24px;
+  }
+
   .embed-youtube-wrapper {
     width: 100%;
     padding-block-end: 56.25%;
@@ -52,6 +55,10 @@ section:hover>.permalink>* {
 }
 
 @media (min-width: 768px) {
+  .permalink {
+    width: 32px;
+  }
+
   .embed-youtube-wrapper {
     width: 80%;
     padding-block-end: 45%;
