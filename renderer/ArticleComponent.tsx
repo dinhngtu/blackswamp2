@@ -27,6 +27,7 @@ export function isSectionViewable(art: Article, s: Section, priv: boolean) {
 
 export interface ArticleProps {
   article?: Article,
+  /** Show all content, including content marked private */
   priv?: boolean,
 };
 
