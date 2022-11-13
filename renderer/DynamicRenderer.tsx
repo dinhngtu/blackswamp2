@@ -34,6 +34,7 @@ async function loadArticle(id: string, pw?: string) {
       article={article}
       priv
       showUnlock={article.Modules?.includes("Secret")}
+      onUnlock={pw => loadArticle(id, pw)}
       permalink={getPermalink(pw)} />,
     document.getElementById("root") as Element);
 };

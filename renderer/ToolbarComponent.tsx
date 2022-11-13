@@ -1,12 +1,9 @@
 import { usePrivacyLink } from "./PrivacySettingsComponent";
 
-export interface ToolbarOptions {
+export interface ToolbarProps {
   showUnlock?: boolean,
-  permalink?: string,
-};
-
-export type ToolbarProps = ToolbarOptions & {
   onUnlock?: (password: string) => void,
+  permalink?: string,
 };
 
 export default function ToolbarComponent(props: ToolbarProps) {

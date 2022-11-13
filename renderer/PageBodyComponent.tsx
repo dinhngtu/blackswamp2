@@ -1,7 +1,7 @@
 import ArticleComponent, { ArticleProps } from "./ArticleComponent";
-import ToolbarComponent, { ToolbarOptions } from "./ToolbarComponent";
+import ToolbarComponent, { ToolbarProps } from "./ToolbarComponent";
 
-export type PageBodyProps = ArticleProps & ToolbarOptions;
+export type PageBodyProps = ArticleProps & ToolbarProps;
 
 export default function PageBodyComponent(props: PageBodyProps) {
   return <>
@@ -11,7 +11,10 @@ export default function PageBodyComponent(props: PageBodyProps) {
         priv={props.priv} />
     </main>
     <footer id="toolbar" aria-label="toolbar">
-      <ToolbarComponent showUnlock={props.showUnlock} permalink={props.permalink} />
+      <ToolbarComponent
+        showUnlock={props.showUnlock}
+        onUnlock={props.onUnlock}
+        permalink={props.permalink} />
     </footer>
   </>;
 }
