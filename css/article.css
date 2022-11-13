@@ -72,6 +72,12 @@ section:hover>.permalink>* {
   }
 }
 
+@media (prefers-contrast: more) {
+  .permalink>* {
+    visibility: visible;
+  }
+}
+
 @media print {
   .permalink {
     left: 0;

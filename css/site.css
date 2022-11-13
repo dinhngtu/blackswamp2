@@ -7,17 +7,6 @@
   --border: #bbb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1a1a1a;
-    --fg: #e6e6e6;
-    --link: #bbf;
-    --link-active: #f1b6b6;
-    --link-visited: #d4b6f1;
-    --border: #444;
-  }
-}
-
 html {
   height: 100%;
   color: var(--fg);
@@ -206,6 +195,45 @@ p {
     margin-left: auto;
     margin-right: auto;
     max-width: 1200px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --fg: #e6e6e6;
+    --link: #bbf;
+    --link-active: #f1b6b6;
+    --link-visited: #d4b6f1;
+    --border: #444;
+  }
+}
+
+@media (prefers-contrast: more) {
+  a {
+    text-decoration-thickness: 1.5px;
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000;
+    --fg: #fff;
+    --link: #c2c2ff;
+    --link-active: #f5cccc;
+    --link-visited: #e1ccf5;
+    --border: #666;
+  }
+}
+
+@media (prefers-contrast: more) and (not (prefers-color-scheme: dark)) {
+  :root {
+    --bg: #fff;
+    --fg: #000;
+    --link: #00b;
+    --link-active: #731616;
+    --link-visited: #461673;
+    --border: #999;
   }
 }
 
