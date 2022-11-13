@@ -1,44 +1,29 @@
-import { Article } from "./Article";
-import { articleOriginWhitelist } from "./Config";
 import { usePrivacyLink } from "./PrivacySettingsComponent";
-import { getPageBaseName } from "./Util";
 
 export interface ToolbarOptions {
   showUnlock?: boolean,
+  permalink?: string,
 };
 
 export type ToolbarProps = ToolbarOptions & {
-  onUnlock?: (article: Article) => void,
+  onUnlock?: (password: string) => void,
 };
 
 export default function ToolbarComponent(props: ToolbarProps) {
-  const unlock = async () => {
+  const unlock = () => {
     if (!props.onUnlock) {
-      return;
-    }
-    const id = getPageBaseName();
-    if (!id) {
       return;
     }
     const password = window.prompt("Enter secret:");
     if (!password) {
       return;
     }
-    const secretpath = new URL(password);
-    if (!articleOriginWhitelist.includes(secretpath.origin)) {
-      return;
-    }
-    if (!secretpath.pathname.endsWith("/")) {
-      secretpath.pathname += "/";
-    }
-    const secret = new URL(id + ".json", secretpath);
-    secret.search = secretpath.search;
-    const secretArticle = await (await fetch(secret.toString())).json();
-    props.onUnlock(secretArticle);
+    props.onUnlock(password);
   };
 
   return <>
-    {props.showUnlock && props.onUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
+    {props.showUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
+    {props.permalink && <a href={props.permalink.toString()}>Permalink</a>}
     {usePrivacyLink()}
   </>
 }
