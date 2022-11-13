@@ -8,7 +8,7 @@
   --border: hsl(0, 0%, 73%);
 }
 
-@media (prefers-color-scheme: dark) {
+@media screen and (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark light;
     --bg: hsl(0, 0%, 10%);
@@ -151,7 +151,8 @@ p {
   overflow-wrap: break-word;
 }
 
-@media (max-width: 767.98px) {
+@media print,
+(max-width: 767.98px) {
   body {
     padding: 24px;
   }
@@ -172,7 +173,7 @@ p {
   }
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   body {
     padding-block-start: 96px;
     padding-block-end: 24px;
@@ -196,14 +197,14 @@ p {
   }
 }
 
-@media (min-width: 992px) {
+@media screen and (min-width: 992px) {
   body {
     padding-left: 160px;
     padding-right: 160px;
   }
 }
 
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
   body {
     margin-left: auto;
     margin-right: auto;

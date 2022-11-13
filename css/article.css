@@ -43,7 +43,8 @@ section:hover>.permalink>* {
   height: 100%;
 }
 
-@media (max-width: 767.98px) {
+@media print,
+(max-width: 767.98px) {
   .permalink {
     width: 24px;
   }
