@@ -1,10 +1,10 @@
 :root {
-  --bg: #eee;
-  --fg: #000;
-  --link: #00b;
-  --link-active: #731616;
-  --link-visited: #461673;
-  --border: #bbb;
+  --bg: hsl(0, 0%, 93%);
+  --fg: hsl(0, 0%, 0%);
+  --link: hsl(240, 100%, 37%);
+  --link-active: hsl(0, 68%, 27%);
+  --link-visited: hsl(271, 68%, 27%);
+  --border: hsl(0, 0%, 73%);
 }
 
 html {
@@ -200,12 +200,12 @@ p {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #1a1a1a;
-    --fg: #e6e6e6;
-    --link: #bbf;
-    --link-active: #f1b6b6;
-    --link-visited: #d4b6f1;
-    --border: #444;
+    --bg: hsl(0, 0%, 10%);
+    --fg: hsl(0, 0%, 90%);
+    --link: hsl(240, 100%, 87%);
+    --link-active: hsl(0, 68%, 83%);
+    --link-visited: hsl(271, 68%, 83%);
+    --border: hsl(0, 0%, 27%);
   }
 }
 
@@ -217,35 +217,35 @@ p {
 
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
   :root {
-    --bg: #000;
-    --fg: #fff;
-    --link: #c2c2ff;
-    --link-active: #f5cccc;
-    --link-visited: #e1ccf5;
-    --border: #666;
+    --bg: hsl(0, 0%, 0%);
+    --fg: hsl(0, 0%, 100%);
+    --link: hsl(240, 100%, 88%);
+    --link-active: hsl(0, 67%, 88%);
+    --link-visited: hsl(271, 67%, 88%);
+    --border: hsl(0, 0%, 40%);
   }
 }
 
 @media (prefers-contrast: more) and (not (prefers-color-scheme: dark)) {
   :root {
-    --bg: #fff;
-    --fg: #000;
-    --link: #00b;
-    --link-active: #731616;
-    --link-visited: #461673;
-    --border: #999;
+    --bg: hsl(0, 0%, 100%);
+    --fg: hsl(0, 0%, 0%);
+    --link: hsl(240, 100%, 37%);
+    --link-active: hsl(0, 68%, 27%);
+    --link-visited: hsl(271, 68%, 27%);
+    --border: hsl(0, 0%, 60%);
   }
 }
 
 @media print {
   :root {
-    --bg: #fff;
-    --fg: #000;
-    --link: #000;
-    --link-active: #000;
-    --link-visited: #000;
-    --link-url: #00b;
-    --border: #bbb;
+    --bg: hsl(0, 0%, 100%);
+    --fg: hsl(0, 0%, 0%);
+    --link: hsl(0, 0%, 0%);
+    --link-active: hsl(0, 0%, 0%);
+    --link-visited: hsl(0, 0%, 0%);
+    --link-url: hsl(240, 100%, 37%);
+    --border: hsl(0, 0%, 73%);
   }
 
   body {
