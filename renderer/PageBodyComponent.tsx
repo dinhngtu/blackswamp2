@@ -14,7 +14,7 @@ export default function PageBodyComponent(props: PageBodyProps) {
         article={article || props.article}
         priv={article ? true : props.priv} />
     </main>
-    <footer id="toolbar">
+    <footer id="toolbar" aria-label="toolbar">
       <ToolbarComponent showUnlock={props.showUnlock} onUnlock={setArticle} />
     </footer>
   </>;
