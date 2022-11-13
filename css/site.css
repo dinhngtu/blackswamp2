@@ -1,10 +1,23 @@
 :root {
+  color-scheme: light normal;
   --bg: hsl(0, 0%, 93%);
   --fg: hsl(0, 0%, 0%);
   --link: hsl(240, 100%, 37%);
   --link-active: hsl(0, 68%, 27%);
   --link-visited: hsl(271, 68%, 27%);
   --border: hsl(0, 0%, 73%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark light;
+    --bg: hsl(0, 0%, 10%);
+    --fg: hsl(0, 0%, 90%);
+    --link: hsl(240, 100%, 88%);
+    --link-active: hsl(0, 68%, 78%);
+    --link-visited: hsl(271, 68%, 78%);
+    --border: hsl(0, 0%, 30%);
+  }
 }
 
 html {
@@ -198,20 +211,17 @@ p {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: hsl(0, 0%, 10%);
-    --fg: hsl(0, 0%, 90%);
-    --link: hsl(240, 100%, 87%);
-    --link-active: hsl(0, 68%, 83%);
-    --link-visited: hsl(271, 68%, 83%);
-    --border: hsl(0, 0%, 27%);
+@media (prefers-contrast: more) {
+  a {
+    text-decoration-thickness: 1.5px;
   }
 }
 
 @media (prefers-contrast: more) {
-  a {
-    text-decoration-thickness: 1.5px;
+  :root {
+    --bg: hsl(0, 0%, 100%);
+    --fg: hsl(0, 0%, 0%);
+    --border: hsl(0, 0%, 60%);
   }
 }
 
@@ -219,21 +229,21 @@ p {
   :root {
     --bg: hsl(0, 0%, 0%);
     --fg: hsl(0, 0%, 100%);
-    --link: hsl(240, 100%, 88%);
-    --link-active: hsl(0, 67%, 88%);
-    --link-visited: hsl(271, 67%, 88%);
     --border: hsl(0, 0%, 40%);
   }
 }
 
-@media (prefers-contrast: more) and (not (prefers-color-scheme: dark)) {
+@media (prefers-contrast: less) {
   :root {
-    --bg: hsl(0, 0%, 100%);
-    --fg: hsl(0, 0%, 0%);
-    --link: hsl(240, 100%, 37%);
-    --link-active: hsl(0, 68%, 27%);
-    --link-visited: hsl(271, 68%, 27%);
-    --border: hsl(0, 0%, 60%);
+    --bg: hsl(0, 0%, 86%);
+    --fg: hsl(0, 0%, 7%);
+  }
+}
+
+@media (prefers-contrast: less) and (prefers-color-scheme: dark) {
+  :root {
+    --bg: hsl(0, 0%, 17%);
+    --fg: hsl(0, 0%, 83%);
   }
 }
 
