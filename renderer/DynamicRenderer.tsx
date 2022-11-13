@@ -30,7 +30,11 @@ async function loadArticle(id: string, pw?: string) {
   secret.search = secretpath.search;
   const article = await (await fetch(secret.toString())).json();
   render(
-    <PageBodyComponent article={article} priv permalink={getPermalink(pw)} />,
+    <PageBodyComponent
+      article={article}
+      priv
+      showUnlock={article.Modules?.includes("Secret")}
+      permalink={getPermalink(pw)} />,
     document.getElementById("root") as Element);
 };
 
