@@ -2,7 +2,7 @@ section {
   position: relative;
 }
 
-.permalink {
+.anchor {
   position: absolute;
   height: 100%;
   font-size: 0.8rem;
@@ -12,15 +12,15 @@ section {
   align-items: flex-start;
 }
 
-.permalink>a {
+.anchor>a {
   text-decoration: none;
 }
 
-.permalink>* {
+.anchor>* {
   visibility: hidden;
 }
 
-section:hover>.permalink>* {
+section:hover>.anchor>* {
   visibility: visible;
 }
 
@@ -45,7 +45,7 @@ section:hover>.permalink>* {
 
 @media print,
 (max-width: 767.98px) {
-  .permalink {
+  .anchor {
     width: 24px;
   }
 
@@ -56,7 +56,7 @@ section:hover>.permalink>* {
 }
 
 @media (min-width: 768px) {
-  .permalink {
+  .anchor {
     width: 32px;
   }
 
@@ -74,23 +74,23 @@ section:hover>.permalink>* {
 }
 
 @media (prefers-contrast: more) {
-  .permalink>* {
+  .anchor>* {
     visibility: visible;
   }
 }
 
 @media print {
-  .permalink {
+  .anchor {
     left: 0;
     top: -1.2rem;
     display: initial;
   }
 
-  .permalink>a {
+  .anchor>a {
     font-size: 0;
   }
 
-  .permalink>a:after {
+  .anchor>a:after {
     font-size: 0.8rem;
     visibility: visible;
     content: "[" attr(href) "]";

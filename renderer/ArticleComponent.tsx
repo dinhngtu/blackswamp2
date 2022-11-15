@@ -50,7 +50,7 @@ export default function ArticleComponent(props: ArticleProps) {
           const secIsPrivate = !isArticlePrivate(props.article!) && isSectionPrivate(s);
           return (
             <section key={i} id={s.Name} className={secIsPrivate ? "private" : undefined}>
-              {s.Name && <span class="permalink"><a href={`#${s.Name}`} aria-label={s.Name}>&#128279;</a></span>}
+              {s.Name && <span class="anchor"><a href={`#${s.Name}`} aria-label={s.Name}>&#128279;</a></span>}
               <SectionComponent {...s} />
             </section>
           );
