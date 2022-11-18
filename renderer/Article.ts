@@ -13,6 +13,7 @@ export type YoutubeSection = Section & {
 };
 export type HALPublicationsSection = Section & {
   IdHAL: string;
+  TEIXml?: string;
 };
 export type PrivacySetting = {
   Name: string;

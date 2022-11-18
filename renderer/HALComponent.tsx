@@ -48,11 +48,16 @@ export default function HALComponent(props: HALPublicationsSection) {
     }
     (async () => {
       try {
-        if (!/^[a-zA-Z0-9\-]+$/.test(props.IdHAL)) {
+        let url: string;
+        if (props.TEIXml) {
+          url = props.TEIXml;
+        } else if (/^[a-zA-Z0-9\-]+$/.test(props.IdHAL)) {
+          url = `https://api.archives-ouvertes.fr/search/?wt=xml-tei&rows=100&sort=producedDate_tdate+desc&q=authIdHal_s:${props.IdHAL}`;
+        } else {
           setError(true);
           return;
         }
-        const resp = await fetch(`https://api.archives-ouvertes.fr/search/?wt=xml-tei&rows=100&sort=producedDate_tdate+desc&q=authIdHal_s:${props.IdHAL}`);
+        const resp = await fetch(url);
         if (!resp.ok) {
           setError(true);
           return;
@@ -147,5 +152,9 @@ export default function HALComponent(props: HALPublicationsSection) {
   const renderedBibGroups = Object.entries(bibGroups)
     .sort((a, b) => getGroupOrder(a[0]) - getGroupOrder(b[0]))
     .map(([g, bib]) => renderBibGroup(g, bib));
-  return <>{renderedBibGroups}</>;
+  const pubDate = haldoc.querySelector("teiHeader>fileDesc>publicationStmt>date")?.getAttribute("when");
+  return <>
+    {renderedBibGroups}
+    {pubDate && <address><span>Updated {new Date(pubDate).toDateString()} </span></address>}
+  </>;
 }

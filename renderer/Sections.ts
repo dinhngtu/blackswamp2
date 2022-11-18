@@ -9,11 +9,11 @@ export function isHtmlSection(s: Section): s is HtmlSection {
 }
 
 export function isYoutubeSection(s: Section): s is YoutubeSection {
-  return (s as YoutubeSection).YoutubeId !== undefined;
+  return typeof (s as YoutubeSection).YoutubeId === "string";
 }
 
 export function isHALSection(s: Section): s is HALPublicationsSection {
-  return (s as HALPublicationsSection).IdHAL !== undefined;
+  return typeof (s as HALPublicationsSection).IdHAL === "string";
 }
 
 export function isPrivacySettingsSection(s: Section): s is PrivacySettingsSection {
