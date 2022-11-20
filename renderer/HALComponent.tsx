@@ -100,7 +100,7 @@ export default function HALComponent(props: HALPublicationsSection) {
       const auName = Array.from(au.querySelectorAll("persName>*"))
         .map(namepart => namepart.textContent)
         .join(" ");
-      if (au.querySelector('idno[type="idhal"][notation="string"]')?.textContent === props.IdHAL) {
+      if (props.IdHAL && au.querySelector('idno[type="idhal"][notation="string"]')?.textContent === props.IdHAL) {
         return <strong>{auName}</strong>;
       } else {
         return auName;
