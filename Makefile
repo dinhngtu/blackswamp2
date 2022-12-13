@@ -12,12 +12,15 @@ CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
 RENDERER_SOURCES=$(wildcard renderer/*)
 NODE_SOURCES=$(wildcard node/*)
 
+FUNCTIONS_SOURCES=$(wildcard pagefuncs/*.mjs)
+FUNCTIONS_TARGETS=$(patsubst pagefuncs/%.mjs,public/functions/%.js,$(FUNCTIONS_SOURCES))
+
 STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) yarn.lock
 DYNAMIC_SOURCES=$(RENDERER_SOURCES) yarn.lock
 
 # general prep
 
-all: articles articles_json css js
+all: articles articles_json css js pages
 
 schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
@@ -98,12 +101,22 @@ rollup.dynamic.config.mjs: tsconfig.dynamic.json
 tsconfig.dynamic.json: tsconfig.base.json
 	@touch $@
 
+# pages functions
+
+public/functions/%.js: pagefuncs/%.mjs
+	@printf COPY\\t$@\\n
+	@install -D $< $@
+
+pages: $(FUNCTIONS_TARGETS)
+
 # clean
 
 clean:
 	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js render.js
 
 cleanall: clean
-	$(RM) public/articles/*.html public/css/*.css public/js/*.js public/json/*.json
+	$(RM) public/articles/*.html public/css/*.css public/js/*.js public/json/*.json public/functions/*.js public/publications.xml
 
 .PHONY: clean cleanall
+
+-include Makefile.pages

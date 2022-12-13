@@ -23,8 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 articles/
+pagefuncs/
 schema.json
 render.js
 renderer/Config.ts
+Makefile.*
 
 .vscode/*.log
