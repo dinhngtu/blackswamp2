@@ -43,7 +43,7 @@ export default function HALComponent(props: HALPublicationsSection) {
   });
 
   useEffect(() => {
-    if (halPermission !== "true") {
+    if (!props.BypassPermission && halPermission !== "true") {
       return;
     }
     (async () => {
@@ -76,9 +76,7 @@ export default function HALComponent(props: HALPublicationsSection) {
     })();
   }, [halPermission]);
 
-  if (halPermission === "false") {
-    return <p>{halPrompt}</p>
-  } else if (halPermission === "unset") {
+  if (!props.BypassPermission && (halPermission === "false" || halPermission === "unset")) {
     return <p>{halPrompt}</p>
   } else if (error) {
     return <p>Error!</p>

@@ -14,6 +14,7 @@ export type YoutubeSection = Section & {
 export type HALPublicationsSection = Section & {
   IdHAL: string;
   TEIXml?: string;
+  BypassPermission?: boolean;
 };
 export type PrivacySetting = {
   Name: string;
