@@ -43,7 +43,7 @@ export default function HALComponent(props: HALPublicationsSection) {
   });
 
   useEffect(() => {
-    if (!props.BypassPermission && halPermission !== "true") {
+    if (halPermission === "loading" || (!props.BypassPermission && halPermission !== "true")) {
       return;
     }
     (async () => {
