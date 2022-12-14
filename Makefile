@@ -15,9 +15,25 @@ NODE_SOURCES=$(wildcard node/*)
 STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) yarn.lock
 DYNAMIC_SOURCES=$(RENDERER_SOURCES) yarn.lock
 
+# conditional building of redistributable files
+
+DIST_DEPS=render.js schema.json
+
+FOLLOW_DIST=
+ifdef FOLLOW_DIST
+DEFAULT_DEPS=$(DIST_DEPS)
+
+default: dist
+
+else
+DEFAULT_DEPS=
+endif
+
 # general prep
 
-all: articles articles_json css js
+default: articles articles_json
+
+dist: css js $(DIST_DEPS)
 
 schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
@@ -35,12 +51,12 @@ render.js: rollup.static.config.mjs $(STATIC_SOURCES)
 public/articles/.guard:
 	@touch $@
 
-public/articles/%.html: articles/%.yaml render.js schema.json | public/articles/.guard
+public/articles/%.html: articles/%.yaml $(DEFAULT_DEPS) | public/articles/.guard
 	@printf HTML\\t$@\\n
 	@$(NODE) render.js $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
-$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml render.js schema.json | public/articles/.guard
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml $(DEFAULT_DEPS) | public/articles/.guard
 	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
 	@touch -c -r $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@) 2>/dev/null || true
 
@@ -58,7 +74,7 @@ articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.h
 public/json/.guard:
 	@touch $@
 
-public/json/%.json: articles/%.yaml render.js schema.json | public/json/.guard
+public/json/%.json: articles/%.yaml $(DEFAULT_DEPS) | public/json/.guard
 	@printf JSON\\t$@\\n
 	@$(NODE) render.js --format json --private $< $@
 
@@ -101,11 +117,14 @@ tsconfig.dynamic.json: tsconfig.base.json
 # clean
 
 clean:
-	$(RM) schema.json $(ARTICLES_HTML) $(ARTICLES_JSON) $(CSS_OBJ) public/js/dynamic.js render.js
+	$(RM) $(ARTICLES_HTML) $(ARTICLES_JSON)
 
-cleanall: clean
+distclean:
+	$(RM) $(CSS_OBJ) public/js/dynamic.js $(DIST_DEPS)
+
+cleanall: clean distclean
 	$(RM) public/articles/*.html public/css/*.css public/js/*.js public/json/*.json
 
-.PHONY: clean cleanall
+.PHONY: clean distclean cleanall
 
 -include Makefile.*
