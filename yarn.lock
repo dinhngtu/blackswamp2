@@ -1363,9 +1363,9 @@ __metadata:
   linkType: hard
 
 "http-cache-semantics@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "http-cache-semantics@npm:4.1.0"
-  checksum: 974de94a81c5474be07f269f9fd8383e92ebb5a448208223bfb39e172a9dbc26feff250192ecc23b9593b3f92098e010406b0f24bd4d588d631f80214648ed42
+  version: 4.1.1
+  resolution: "http-cache-semantics@npm:4.1.1"
+  checksum: 83ac0bc60b17a3a36f9953e7be55e5c8f41acc61b22583060e8dedc9dd5e3607c823a88d0926f9150e571f90946835c7fe150732801010845c72cd8bbff1a236
   languageName: node
   linkType: hard
 
@@ -2715,8 +2715,8 @@ __metadata:
 
 "yargs@file:./yargs-placeholder::locator=blackswamp2%40workspace%3A.":
   version: 1.0.0
-  resolution: "yargs@file:./yargs-placeholder#./yargs-placeholder::hash=e29e56&locator=blackswamp2%40workspace%3A."
-  checksum: b3639d7eb9560a02845ccb570cbdad22b61b26c0e2018f1bf64b0ad43d8ee1ba083d32db26d52339b915b721cb24f4a04ac25e75089bbcc9e33cb86e2c57dc2e
+  resolution: "yargs@file:./yargs-placeholder#./yargs-placeholder::hash=9dedf2&locator=blackswamp2%40workspace%3A."
+  checksum: 5b287ffc6d94c87b41bcb405acbde9a7a48c06468f088959eb7b6f38e018cb168981ff7bc32cb3d394387de745cefd545d747a5da89663c72128f72f5bed7fe5
   languageName: node
   linkType: hard
 
