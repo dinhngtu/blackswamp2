@@ -14,6 +14,9 @@ function getPermalink(pw?: string) {
 }
 
 async function loadArticle(id: string, pw?: string) {
+  if (!window.location.pathname.startsWith("/articles/")) {
+    return;
+  }
   var secretpath: URL;
   if (pw) {
     secretpath = new URL(pw);
