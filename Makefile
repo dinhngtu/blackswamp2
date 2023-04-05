@@ -12,8 +12,8 @@ CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
 RENDERER_SOURCES=$(wildcard renderer/*)
 NODE_SOURCES=$(wildcard node/*)
 
-STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) yarn.lock
-DYNAMIC_SOURCES=$(RENDERER_SOURCES) yarn.lock
+STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) package-lock.json
+DYNAMIC_SOURCES=$(RENDERER_SOURCES) package-lock.json
 
 # conditional building of redistributable files
 
