@@ -11,10 +11,17 @@ export type YoutubeSection = Section & {
   YoutubeId: string;
   Title?: string;
 };
+export type OtherPublication = {
+  Title: string;
+  Url?: string;
+  Authors?: string;
+  Reference?: string;
+};
 export type HALPublicationsSection = Section & {
   IdHAL: string;
   TEIXml?: string;
   BypassPermission?: boolean;
+  OtherPublications?: OtherPublication[]
 };
 export type PrivacySetting = {
   Name: string;

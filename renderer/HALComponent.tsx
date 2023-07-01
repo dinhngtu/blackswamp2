@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import xss from "xss";
-import { HALPublicationsSection } from "./Article";
+import { HALPublicationsSection, OtherPublication } from "./Article";
 import { usePrivacyPrompt } from "./PrivacySettingsComponent";
 
 interface BibGroup {
@@ -136,6 +136,27 @@ export default function HALComponent(props: HALPublicationsSection) {
     );
   }
 
+  function renderOtherBib(bib: OtherPublication) {
+    return (
+      <li class="bib" key={bib.Title}>
+        {bib.Url ? <a class="bib-title" href={bib.Url}>{bib.Title}</a> : <p class="bibTitle">{bib.Title}</p>}
+        {bib.Authors && <p class="bib-authors" dangerouslySetInnerHTML={{ __html: xss(bib.Authors) }} />}
+        {bib.Reference && <p class="bib-ref" dangerouslySetInnerHTML={{ __html: xss(bib.Reference) }} />}
+      </li>
+    );
+  }
+
+  function renderOtherBibGroup(bg: OtherPublication[]) {
+    return (
+      <div key="X-CUSTOM" id="X-CUSTOM">
+        <h2>Downloadable preprints and postprints</h2>
+        <ul class="bib-group">
+          {bg.map(bib => renderOtherBib(bib))}
+        </ul>
+      </div>
+    );
+  }
+
   const bibs = Array.from(haldoc.querySelectorAll("body>listBibl>biblFull"));
   const bibGroups = bibs.reduce<{ [K: string]: BibGroup }>((groups, bib) => {
     const groupEl = bib.querySelector('profileDesc>textClass>classCode[scheme="halTypology"]');
@@ -153,6 +174,7 @@ export default function HALComponent(props: HALPublicationsSection) {
   const pubDate = haldoc.querySelector("teiHeader>fileDesc>publicationStmt>date")?.getAttribute("when");
   return <>
     {renderedBibGroups}
+    {props.OtherPublications && renderOtherBibGroup(props.OtherPublications)}
     {pubDate && <address><span>Updated {new Date(pubDate).toDateString()} </span></address>}
   </>;
 }
