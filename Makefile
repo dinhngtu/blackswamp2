@@ -15,23 +15,9 @@ NODE_SOURCES=$(wildcard node/*)
 STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) package-lock.json
 DYNAMIC_SOURCES=$(RENDERER_SOURCES) package-lock.json
 
-# conditional building of redistributable files
-
 DIST_DEPS=render.js schema.json
 
-FOLLOW_DIST=
-ifdef FOLLOW_DIST
-DEFAULT_DEPS=$(DIST_DEPS)
-
-default: dist
-
-else
-DEFAULT_DEPS=
-endif
-
-# general prep
-
-default: articles articles_json
+all: dist articles articles_json
 
 dist: css js $(DIST_DEPS)
 
@@ -51,12 +37,12 @@ render.js: rollup.static.config.mjs $(STATIC_SOURCES)
 public/articles/.guard:
 	@touch $@
 
-public/articles/%.html: articles/%.yaml $(DEFAULT_DEPS) | public/articles/.guard
+public/articles/%.html: articles/%.yaml $(DIST_DEPS) | public/articles/.guard
 	@printf HTML\\t$@\\n
 	@$(NODE) render.js $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
-$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml $(DEFAULT_DEPS) | public/articles/.guard
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml $(DIST_DEPS) | public/articles/.guard
 	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
 	@touch -c -r $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@) 2>/dev/null || true
 
@@ -74,7 +60,7 @@ articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.h
 public/json/.guard:
 	@touch $@
 
-public/json/%.json: articles/%.yaml $(DEFAULT_DEPS) | public/json/.guard
+public/json/%.json: articles/%.yaml $(DIST_DEPS) | public/json/.guard
 	@printf JSON\\t$@\\n
 	@$(NODE) render.js --format json --private $< $@
 
