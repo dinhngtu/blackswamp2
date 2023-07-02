@@ -148,8 +148,8 @@ export default function HALComponent(props: HALPublicationsSection) {
 
   function renderOtherBibGroup(bg: OtherPublication[]) {
     return (
-      <div key="X-CUSTOM" id="X-CUSTOM">
-        <h2>Author reprints</h2>
+      <div key="X-OTHER" id="X-OTHER">
+        <h2>Other preprints and postprints</h2>
         <ul class="bib-group">
           {bg.map(bib => renderOtherBib(bib))}
         </ul>
