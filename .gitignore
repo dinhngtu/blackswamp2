@@ -22,11 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-articles/
-pagefuncs/
+private/
 schema.json
 render.js
-renderer/Config.ts
 Makefile.*
 
 .vscode/*.log

@@ -1,10 +1,10 @@
 NODE?=node
 
-ARTICLES_SOURCES=$(wildcard articles/*.yaml)
-ARTICLES_HTML=$(patsubst articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
-ARTICLES_HTML_TOUCH=$(patsubst articles/%.yaml,public/articles/%.html.touch,$(ARTICLES_SOURCES))
-ARTICLES_JSON=$(patsubst articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
-ARTICLES_JSON_TOUCH=$(patsubst articles/%.yaml,public/json/%.json.touch,$(ARTICLES_SOURCES))
+ARTICLES_SOURCES=$(wildcard private/articles/*.yaml)
+ARTICLES_HTML=$(patsubst private/articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
+ARTICLES_HTML_TOUCH=$(patsubst private/articles/%.yaml,public/articles/%.html.touch,$(ARTICLES_SOURCES))
+ARTICLES_JSON=$(patsubst private/articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
+ARTICLES_JSON_TOUCH=$(patsubst private/articles/%.yaml,public/json/%.json.touch,$(ARTICLES_SOURCES))
 
 CSS_SOURCES=$(wildcard css/[!_]*.css)
 CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
@@ -37,13 +37,13 @@ render.js: rollup.static.config.mjs $(STATIC_SOURCES)
 public/articles/.guard:
 	@touch $@
 
-public/articles/%.html: articles/%.yaml $(DIST_DEPS) | public/articles/.guard
+public/articles/%.html: private/articles/%.yaml $(DIST_DEPS) | public/articles/.guard
 	@printf HTML\\t$@\\n
 	@$(NODE) render.js $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
-$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: articles/%.yaml $(DIST_DEPS) | public/articles/.guard
-	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
+$(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: private/articles/%.yaml $(DIST_DEPS) | public/articles/.guard
+	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,private/articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
 	@touch -c -r $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@) 2>/dev/null || true
 
 public/%.html: public/articles/%.html
@@ -60,7 +60,7 @@ articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.h
 public/json/.guard:
 	@touch $@
 
-public/json/%.json: articles/%.yaml $(DIST_DEPS) | public/json/.guard
+public/json/%.json: private/articles/%.yaml $(DIST_DEPS) | public/json/.guard
 	@printf JSON\\t$@\\n
 	@$(NODE) render.js --format json --private $< $@
 
