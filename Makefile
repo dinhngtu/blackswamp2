@@ -113,4 +113,4 @@ cleanall: clean distclean
 
 .PHONY: clean distclean cleanall
 
--include public/Makefile.*
+-include private/Makefile.*
