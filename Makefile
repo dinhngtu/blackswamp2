@@ -6,8 +6,8 @@ ARTICLES_HTML_TOUCH=$(patsubst private/articles/%.yaml,public/articles/%.html.to
 ARTICLES_JSON=$(patsubst private/articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
 ARTICLES_JSON_TOUCH=$(patsubst private/articles/%.yaml,public/json/%.json.touch,$(ARTICLES_SOURCES))
 
-CSS_SOURCES=$(wildcard css/[!_]*.css)
-CSS_OBJ=$(patsubst css/%.css,public/css/%.css,$(CSS_SOURCES))
+CSS_SOURCES=$(wildcard private/css/[!_]*.css)
+CSS_OBJ=$(patsubst private/css/%.css,public/css/%.css,$(CSS_SOURCES))
 
 RENDERER_SOURCES=$(wildcard renderer/*)
 NODE_SOURCES=$(wildcard node/*)
@@ -73,7 +73,7 @@ articles_json: $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
 
 # css/js
 
-public/css/%.css: css/%.css
+public/css/%.css: private/css/%.css
 	@printf CSS\\t$@\\n
 	@$(NODE) cleancss.js $< -o $@
 
