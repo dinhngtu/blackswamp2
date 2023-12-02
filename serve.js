@@ -7,10 +7,11 @@ var path = require('path');
 var root = './public';
 
 http.createServer(function (request, response) {
-  if (request.url === '/') {
+  var url = new URL(request.url, 'http://' + request.headers.host);
+  if (url.pathname === '/') {
     var filePath = root + '/index.html';
   } else {
-    var filePath = root + request.url;
+    var filePath = root + url.pathname;
   }
 
   var extname = String(path.extname(filePath)).toLowerCase();
