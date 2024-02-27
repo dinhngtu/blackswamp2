@@ -1,14 +1,12 @@
-import { marked } from "marked";
+import { Marked } from "marked";
 import xss from "xss";
 import { AllSections } from "../renderer/Article";
 import { isHtmlSection, isMarkdownSection } from "../renderer/Sections";
 
-marked.setOptions({
-  headerIds: false,
-});
+const marked = new Marked();
 
 export function renderMarkdown(md: string) {
-  return xss(marked(md));
+  return xss(marked.parse(md) as string);
 };
 
 export function filterSection(s: AllSections): AllSections {
