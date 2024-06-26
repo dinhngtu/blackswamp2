@@ -9,7 +9,7 @@ ARTICLES_JSON_TOUCH=$(patsubst private/articles/%.yaml,public/json/%.json.touch,
 CSS_SOURCES=$(wildcard private/css/[!_]*.css)
 CSS_OBJ=$(patsubst private/css/%.css,public/css/%.css,$(CSS_SOURCES))
 
-RENDERER_SOURCES=$(wildcard renderer/*)
+RENDERER_SOURCES=$(wildcard renderer/*) private/Config.ts
 NODE_SOURCES=$(wildcard node/*)
 
 STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) package-lock.json
