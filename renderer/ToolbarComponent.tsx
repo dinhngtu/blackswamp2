@@ -19,6 +19,7 @@ export default function ToolbarComponent(props: ToolbarProps) {
   };
 
   return <>
+    <a href="/">Home</a>
     {props.showUnlock && <a href="javascript:void(0)" onClick={unlock}>Unlock</a>}
     {props.permalink && <a href={props.permalink.toString()}>Permalink</a>}
     {usePrivacyLink()}
