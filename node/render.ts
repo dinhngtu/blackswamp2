@@ -1,13 +1,14 @@
-import * as fs from "fs";
+import * as fs from "fs/promises";
 import Ajv, { JSONSchemaType } from "ajv";
 import YAML from "yaml";
 import path from "path";
 import minimist from "minimist";
+import { h } from "preact";
+import { render } from "preact-render-to-string";
+import { filterSection } from "./Prerender";
 import { Article } from "../renderer/Article";
 import { isArticlePrivate } from "../renderer/ArticleComponent";
 import PageComponent from "../renderer/PageComponent";
-import { renderArticle } from "./NodeRenderer";
-import { filterSection } from "./DualRenderer";
 
 const argopts = {
   boolean: ["no-validate", "private", "touch", "help"],
@@ -25,48 +26,46 @@ if (args.help || args._.length !== 2) {
 
 const [infile, outfile] = args._;
 
-const schema: JSONSchemaType<Article> = JSON.parse(fs.readFileSync(args.schema).toString());
-const ajv = new Ajv();
-const validator = ajv.compile(schema);
+const article: Article = YAML.parse(await fs.readFile(infile, { encoding: "utf8" }));
 
-const obj: Article = YAML.parse(fs.readFileSync(infile, { encoding: "utf8" }));
+if (!args["no-validate"]) {
+  const schema: JSONSchemaType<Article> = JSON.parse((await fs.readFile(args.schema)).toString());
+  const ajv = new Ajv();
+  const validator = ajv.compile(schema);
 
-if (!args["no-validate"] && !validator(obj)) {
-  throw Error("failed validation " + validator.errors);
+  if (!validator(article)) {
+    throw Error("failed validation " + validator.errors);
+  }
 }
 
-if (!args.private && isArticlePrivate(obj)) {
+if (!args.private && isArticlePrivate(article)) {
   process.exit(0);
 }
 
 if (args.touch) {
   const time = new Date();
   try {
-    fs.utimesSync(outfile, time, time);
+    await fs.utimes(outfile, time, time);
   } catch {
   }
   process.exit(0);
 }
 
-fs.mkdirSync(path.dirname(outfile), { recursive: true })
-if (args.format === "html") {
-  const dom = renderArticle({
-    component: PageComponent,
-    schema: schema,
-  }, obj);
-  if (typeof dom !== "string") {
-    throw Error("cannot render");
-  }
+await fs.mkdir(path.dirname(outfile), { recursive: true })
+article.Sections = await Promise.all((article.Sections || []).map(async s => await filterSection(s, args.format)));
 
-  const outfd = fs.openSync(outfile, "w")
-  fs.writeSync(outfd, "<!doctype html>");
-  fs.writeSync(outfd, dom);
-  fs.writeSync(outfd, "<!--blackswamp2-->");
-  fs.close(outfd);
+if (args.format === "html") {
+  const el = h(PageComponent, { article });
+  const dom = render(el);
+
+  const outfd = await fs.open(outfile, "w")
+  await outfd.write("<!doctype html>");
+  await outfd.write(dom);
+  await outfd.write("<!--blackswamp2-->");
+  await outfd.close();
 
 } else if (args.format === "json") {
-  obj.Sections = obj.Sections?.map(s => filterSection(s));
-  fs.writeFileSync(outfile, JSON.stringify(obj));
+  await fs.writeFile(outfile, JSON.stringify(article));
 
 } else {
   throw Error("unknown format " + args.format);

@@ -3,6 +3,10 @@ import xss from "xss";
 import { HALPublicationsSection, OtherPublication } from "./Article";
 import { usePrivacyPrompt } from "./PrivacySettingsComponent";
 
+export type HALPublicationsFilteredSection = HALPublicationsSection & {
+  PrerenderData?: XMLDocument;
+};
+
 interface BibGroup {
   name: string;
   bibs: Element[];
@@ -33,59 +37,28 @@ function getGroupOrder(type: string) {
   return docTypes[type] || 1000;
 }
 
-export default function HALComponent(props: HALPublicationsSection) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [haldoc, setHALDocument] = useState<XMLDocument | null>(null);
-  const [halPermission, _, halPrompt] = usePrivacyPrompt({
-    Name: "hal",
-    DisplayName: "HAL Articles API",
-  });
-
-  useEffect(() => {
-    if (halPermission === "loading" || (!props.BypassPermission && halPermission !== "true")) {
-      return;
-    }
-    (async () => {
-      try {
-        let url: string;
-        if (props.TEIXml) {
-          url = props.TEIXml;
-        } else if (/^[a-zA-Z0-9\-]+$/.test(props.IdHAL)) {
-          url = `https://api.archives-ouvertes.fr/search/?wt=xml-tei&rows=100&sort=producedDate_tdate+desc&q=authIdHal_s:${props.IdHAL}`;
-        } else {
-          setError(true);
-          return;
-        }
-        const resp = await fetch(url);
-        if (!resp.ok) {
-          setError(true);
-          return;
-        }
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(await resp.text(), "text/xml");
-        if (doc.querySelector("parsererror")) {
-          setError(true);
-          return;
-        }
-        setHALDocument(doc);
-        setLoading(false);
-      } catch {
-        setError(true);
-      }
-    })();
-  }, [halPermission]);
-
-  if (!props.BypassPermission && (halPermission === "false" || halPermission === "unset")) {
-    return <p>{halPrompt}</p>
-  } else if (error) {
-    return <p>Error!</p>
-  } else if (loading) {
-    return <p>Loading&hellip;</p>
-  } else if (!haldoc) {
-    return <p>Error!</p>
+export async function fetchHaldoc(s: HALPublicationsSection, parser: any) {
+  let url: string;
+  if (s.TEIXml) {
+    url = s.TEIXml;
+  } else if (/^[a-zA-Z0-9\-]+$/.test(s.IdHAL)) {
+    url = `https://api.archives-ouvertes.fr/search/?wt=xml-tei&rows=100&sort=producedDate_tdate+desc&q=authIdHal_s:${s.IdHAL}`;
+  } else {
+    throw new Error("invalid HAL section specification");
   }
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    throw new Error(resp.status.toString());
+  }
+  const doc = parser.parseFromString(await resp.text(), "text/xml");
+  const err = doc.querySelector("parsererror");
+  if (err) {
+    throw new Error(err.textContent || "");
+  }
+  return doc;
+}
 
+export default function HALComponent(props: HALPublicationsFilteredSection) {
   function getBibDate(bib: Element) {
     var edition = bib.querySelector('editionStmt>edition[type="current"]');
     return edition?.querySelector('date[type="whenProduced"]')?.textContent ||
@@ -157,24 +130,63 @@ export default function HALComponent(props: HALPublicationsSection) {
     );
   }
 
-  const bibs = Array.from(haldoc.querySelectorAll("body>listBibl>biblFull"));
-  const bibGroups = bibs.reduce<{ [K: string]: BibGroup }>((groups, bib) => {
-    const groupEl = bib.querySelector('profileDesc>textClass>classCode[scheme="halTypology"]');
-    const groupType = groupEl?.getAttribute("n") || "";
-    const groupName = groupEl?.textContent;
+  function render(haldoc: XMLDocument) {
+    const bibs = Array.from(haldoc.querySelectorAll("body>listBibl>biblFull"));
+    const bibGroups = bibs.reduce<{ [K: string]: BibGroup }>((groups, bib) => {
+      const groupEl = bib.querySelector('profileDesc>textClass>classCode[scheme="halTypology"]');
+      const groupType = groupEl?.getAttribute("n") || "";
+      const groupName = groupEl?.textContent;
 
-    const group = (groups[groupType] || { name: groupName, bibs: [] });
-    group.bibs.push(bib);
-    groups[groupType] = group;
-    return groups;
-  }, {});
-  const renderedBibGroups = Object.entries(bibGroups)
-    .sort((a, b) => getGroupOrder(a[0]) - getGroupOrder(b[0]))
-    .map(([g, bib]) => renderBibGroup(g, bib));
-  const pubDate = haldoc.querySelector("teiHeader>fileDesc>publicationStmt>date")?.getAttribute("when");
-  return <>
-    {renderedBibGroups}
-    {props.OtherPublications && renderOtherBibGroup(props.OtherPublications)}
-    {pubDate && <address><span>Updated {new Date(pubDate).toDateString()} </span></address>}
-  </>;
+      const group = (groups[groupType] || { name: groupName, bibs: [] });
+      group.bibs.push(bib);
+      groups[groupType] = group;
+      return groups;
+    }, {});
+    const renderedBibGroups = Object.entries(bibGroups)
+      .sort((a, b) => getGroupOrder(a[0]) - getGroupOrder(b[0]))
+      .map(([g, bib]) => renderBibGroup(g, bib));
+    const pubDate = haldoc.querySelector("teiHeader>fileDesc>publicationStmt>date")?.getAttribute("when");
+    return <>
+      {renderedBibGroups}
+      {props.OtherPublications && renderOtherBibGroup(props.OtherPublications)}
+      {pubDate && <address><span>Updated {new Date(pubDate).toDateString()} </span></address>}
+    </>;
+  }
+
+  if (props.PrerenderData) {
+    return render(props.PrerenderData);
+  }
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [haldoc, setHALDocument] = useState<XMLDocument | null>(null);
+  const [halPermission, _, halPrompt] = usePrivacyPrompt({
+    Name: "hal",
+    DisplayName: "HAL Articles API",
+  });
+
+  useEffect(() => {
+    if (halPermission === "loading" || (!props.BypassPermission && halPermission !== "true")) {
+      return;
+    }
+    (async () => {
+      try {
+        setHALDocument(await fetchHaldoc(props, new DOMParser()));
+        setLoading(false);
+      } catch {
+        setError(true);
+      }
+    })();
+  }, [halPermission]);
+
+  if (!props.BypassPermission && (halPermission === "false" || halPermission === "unset")) {
+    return <p>{halPrompt}</p>
+  } else if (error) {
+    return <p>Error!</p>
+  } else if (loading) {
+    return <p>Loading&hellip;</p>
+  } else if (!haldoc) {
+    return <p>Error!</p>
+  }
+  return render(haldoc);
 }

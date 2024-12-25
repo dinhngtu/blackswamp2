@@ -5,8 +5,8 @@ import typescript from "typescript";
 export default {
   input: "./node/render.ts",
   output: {
-    file: "render.js",
-    format: "cjs"
+    file: "render.mjs",
+    format: "es"
   },
   plugins: [
     ts({

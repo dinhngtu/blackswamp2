@@ -21,6 +21,7 @@ export type HALPublicationsSection = Section & {
   IdHAL: string;
   TEIXml?: string;
   BypassPermission?: boolean;
+  Prerender: boolean;
   OtherPublications?: OtherPublication[]
 };
 export type PrivacySetting = {

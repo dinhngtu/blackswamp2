@@ -15,7 +15,7 @@ NODE_SOURCES=$(wildcard node/*)
 STATIC_SOURCES=$(RENDERER_SOURCES) $(NODE_SOURCES) package-lock.json
 DYNAMIC_SOURCES=$(RENDERER_SOURCES) package-lock.json
 
-DIST_DEPS=render.js schema.json
+DIST_DEPS=render.mjs schema.json
 
 all: dist articles articles_json
 
@@ -25,7 +25,7 @@ schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
 	@$(NODE) generate-schema.js $< Article $@
 
-render.js: rollup.static.config.mjs $(STATIC_SOURCES)
+render.mjs: rollup.static.config.mjs $(STATIC_SOURCES)
 	@printf JSS\\t$@\\n
 	@./node_modules/.bin/rollup -c $<
 
@@ -39,11 +39,11 @@ public/articles/.guard:
 
 public/articles/%.html: private/articles/%.yaml $(DIST_DEPS) | public/articles/.guard
 	@printf HTML\\t$@\\n
-	@$(NODE) render.js $< $@
+	@$(NODE) render.mjs $< $@
 
 # this forced static pattern ensures that all targeted html files are newer than guard
 $(ARTICLES_HTML_TOUCH): public/articles/%.html.touch: private/articles/%.yaml $(DIST_DEPS) | public/articles/.guard
-	@$(NODE) render.js --touch --no-validate $(patsubst public/articles/%.html.touch,private/articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
+	@$(NODE) render.mjs --touch --no-validate $(patsubst public/articles/%.html.touch,private/articles/%.yaml,$@) $(patsubst public/articles/%.html.touch,public/articles/%.html,$@)
 	@touch -c -r $(patsubst public/articles/%.html.touch,public/articles/%.html,$@) $(patsubst public/articles/%.html.touch,public/%.html,$@) 2>/dev/null || true
 
 public/%.html: public/articles/%.html
@@ -62,7 +62,7 @@ public/json/.guard:
 
 public/json/%.json: private/articles/%.yaml $(DIST_DEPS) | public/json/.guard
 	@printf JSON\\t$@\\n
-	@$(NODE) render.js --format json --private $< $@
+	@$(NODE) render.mjs --format json --private $< $@
 
 $(ARTICLES_JSON_TOUCH): public/json/%.json.touch: | public/json/.guard
 	@touch -c $(patsubst public/json/%.json.touch,public/json/%.json,$@)

@@ -24,7 +24,7 @@ yarn-error.log*
 
 private/
 schema.json
-render.js
+render.mjs
 Makefile.*
 
 .vscode/*.log

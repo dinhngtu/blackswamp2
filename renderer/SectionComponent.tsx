@@ -1,7 +1,6 @@
 import { HtmlSection, Section, YoutubeSection } from "./Article";
 import HALComponent from "./HALComponent";
 import PrivacySettingsComponent, { usePrivacyPrompt } from "./PrivacySettingsComponent";
-import { filterSection } from "DualRenderer";
 import { isHtmlSection, isYoutubeSection, isHALSection, isPrivacySettingsSection } from "./Sections";
 import xss from "xss";
 
@@ -42,8 +41,7 @@ function YoutubeSectionComponent(s: YoutubeSection) {
   );
 }
 
-export default function SectionComponent(rawSection: Section) {
-  const s = filterSection(rawSection);
+export default function SectionComponent(s: Section) {
   if (isHtmlSection(s)) {
     return HtmlSectionComponent(s);
   } else if (isYoutubeSection(s)) {
