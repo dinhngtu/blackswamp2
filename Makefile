@@ -3,6 +3,8 @@ NODE?=node
 ARTICLES_SOURCES=$(wildcard private/articles/*.yaml)
 ARTICLES_HTML=$(patsubst private/articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
 ARTICLES_HTML_TOUCH=$(patsubst private/articles/%.yaml,public/articles/%.html.touch,$(ARTICLES_SOURCES))
+ARTICLES_PRIVATE_JSON=$(patsubst private/articles/%.yaml,private/json/%.json,$(ARTICLES_SOURCES))
+ARTICLES_PRIVATE_JSON_TOUCH=$(patsubst private/articles/%.yaml,private/json/%.json.touch,$(ARTICLES_SOURCES))
 ARTICLES_JSON=$(patsubst private/articles/%.yaml,public/json/%.json,$(ARTICLES_SOURCES))
 ARTICLES_JSON_TOUCH=$(patsubst private/articles/%.yaml,public/json/%.json.touch,$(ARTICLES_SOURCES))
 
@@ -57,17 +59,29 @@ articles: $(ARTICLES_HTML) $(ARTICLES_HTML_TOUCH) public/index.html public/404.h
 
 # json
 
+private/json/.guard:
+	@touch $@
+
+private/json/%.json: private/articles/%.yaml $(DIST_DEPS) | private/json/.guard
+	@printf JSON\\t$@\\n
+	@$(NODE) render.mjs --format json --private $< $@
+
+$(ARTICLES_PRIVATE_JSON_TOUCH): private/json/%.json.touch: | private/json/.guard
+	@touch -c $(patsubst private/json/%.json.touch,private/json/%.json,$@)
+
 public/json/.guard:
 	@touch $@
 
 public/json/%.json: private/articles/%.yaml $(DIST_DEPS) | public/json/.guard
 	@printf JSON\\t$@\\n
-	@$(NODE) render.mjs --format json --private $< $@
+	@$(NODE) render.mjs --format json $< $@
 
 $(ARTICLES_JSON_TOUCH): public/json/%.json.touch: | public/json/.guard
 	@touch -c $(patsubst public/json/%.json.touch,public/json/%.json,$@)
 
-articles_json: $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
+articles_json: $(ARTICLES_PRIVATE_JSON) $(ARTICLES_PRIVATE_JSON_TOUCH) $(ARTICLES_JSON) $(ARTICLES_JSON_TOUCH)
+	@find private/json/ -type f -name '*.json' \! -newer private/json/.guard -printf 'DELETE\t%p\n' -delete
+	@$(RM) private/json/.guard private/json/*.touch
 	@find public/json/ -type f -name '*.json' \! -newer public/json/.guard -printf 'DELETE\t%p\n' -delete
 	@$(RM) public/json/.guard public/json/*.touch
 
