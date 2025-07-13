@@ -96,7 +96,7 @@ css: $(CSS_OBJ)
 public/js/dynamic.js: rollup.dynamic.config.mjs $(DYNAMIC_SOURCES)
 	@printf JSD\\t$@\\n
 	@./node_modules/.bin/rollup -c $<
-	@./node_modules/.bin/terser -o $@ -c -m -- $@
+	@./node_modules/.bin/terser -o $@ -c -- $@
 
 js: public/js/dynamic.js
 
