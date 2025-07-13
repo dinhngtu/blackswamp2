@@ -3,5 +3,10 @@
     "schema.json": [
       "*.yaml"
     ]
-  }
+  },
+  "editor.rulers": [
+    {
+      "column": 80
+    }
+  ]
 }
