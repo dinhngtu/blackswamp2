@@ -89,7 +89,7 @@ articles_json: $(ARTICLES_PRIVATE_JSON) $(ARTICLES_PRIVATE_JSON_TOUCH) $(ARTICLE
 
 public/css/%.css: private/css/%.css
 	@printf CSS\\t$@\\n
-	@$(NODE) cleancss.js $< -o $@
+	@cp -f $< $@
 
 css: $(CSS_OBJ)
 
