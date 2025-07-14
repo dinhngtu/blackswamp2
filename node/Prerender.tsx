@@ -1,6 +1,6 @@
 import { Marked } from "marked";
 import xss from "xss";
-import { JSDOM } from "jsdom";
+import { DOMParser } from "linkedom";
 import { AllSections } from "../renderer/Article";
 import { isHALSection, isHtmlSection, isMarkdownSection } from "../renderer/Sections";
 import { fetchHaldoc, HALPublicationsFilteredSection } from "../renderer/HALComponent";
@@ -13,7 +13,7 @@ function renderMarkdown(md: string) {
 
 async function filterHtml(s: AllSections) {
   if (isHALSection(s) && s.Prerender) {
-    const parser = new (new JSDOM()).window.DOMParser();
+    const parser = new DOMParser();
     const hs = s as HALPublicationsFilteredSection;
     hs.PrerenderData = await fetchHaldoc(hs, parser);
     return hs;
