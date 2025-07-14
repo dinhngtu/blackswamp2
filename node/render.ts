@@ -1,5 +1,4 @@
 import * as fs from "fs/promises";
-import Ajv, { JSONSchemaType } from "ajv";
 import YAML from "yaml";
 import path from "path";
 import minimist from "minimist";
@@ -29,12 +28,24 @@ const [infile, outfile] = args._;
 const article: Article = YAML.parse(await fs.readFile(infile, { encoding: "utf8" }));
 
 if (!args["no-validate"]) {
-  const schema: JSONSchemaType<Article> = JSON.parse((await fs.readFile(args.schema)).toString());
-  const ajv = new Ajv();
-  const validator = ajv.compile(schema);
+  let Ajv = null;
+  try {
+    // @ts-ignore
+    const { default: _Ajv } = await import("ajv");
+    Ajv = _Ajv;
+  } catch {
+  }
 
-  if (!validator(article)) {
-    throw Error("failed validation " + validator.errors);
+  if (Ajv == null) {
+    console.warn("ajv not found, skipping validation");
+  } else {
+    const schema = JSON.parse((await fs.readFile(args.schema)).toString());
+    const ajv = new Ajv();
+    const validator = ajv.compile(schema);
+
+    if (!validator(article)) {
+      throw Error("failed validation " + validator.errors);
+    }
   }
 }
 
