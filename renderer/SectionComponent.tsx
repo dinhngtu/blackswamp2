@@ -24,7 +24,6 @@ function YoutubeSectionComponent(s: YoutubeSection) {
           <iframe
             className="embed-youtube"
             src={`https://www.youtube.com/embed/${safeYtid}`}
-            frameBorder="0"
             allowFullScreen>
           </iframe>
         </div>
