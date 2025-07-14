@@ -1,4 +1,6 @@
 NODE?=node
+ESBUILD?=./node_modules/.bin/esbuild
+ESBUILD_MINIFY?=--minify-whitespace --minify-syntax
 
 ARTICLES_SOURCES=$(wildcard private/articles/*.yaml)
 ARTICLES_HTML=$(patsubst private/articles/%.yaml,public/articles/%.html,$(ARTICLES_SOURCES))
@@ -29,7 +31,7 @@ schema.json: tsconfig.static.json renderer/Article.ts
 
 render.mjs: node/render.ts tsconfig.static.json $(STATIC_SOURCES)
 	@printf JSS\\t$@\\n
-	@./node_modules/.bin/esbuild $< --bundle --platform=node --format=esm --target=es2022 --packages=external --tsconfig=tsconfig.static.json --outfile=$@
+	@$(ESBUILD) $< --bundle --platform=node --format=esm --target=es2022 --packages=external --tsconfig=tsconfig.static.json --outfile=$@
 
 .SUFFIXES:
 
@@ -89,13 +91,13 @@ articles_json: $(ARTICLES_PRIVATE_JSON) $(ARTICLES_PRIVATE_JSON_TOUCH) $(ARTICLE
 
 public/css/%.css: private/css/%.css
 	@printf CSS\\t$@\\n
-	@cp -f $< $@
+	@$(ESBUILD) --loader=css $(ESBUILD_MINIFY) < $< > $@
 
 css: $(CSS_OBJ)
 
 public/js/dynamic.js: renderer/DynamicRenderer.tsx $(DYNAMIC_SOURCES)
 	@printf JSD\\t$@\\n
-	@./node_modules/.bin/esbuild $< --bundle --platform=browser --target=es6 --minify-whitespace --minify-syntax --outfile=$@
+	@$(ESBUILD) $< --bundle --platform=browser --target=es6 $(ESBUILD_MINIFY) --outfile=$@
 
 js: public/js/dynamic.js
 
