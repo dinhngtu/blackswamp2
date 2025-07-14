@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "es2017",
-    "module": "es2022",
     "skipLibCheck": true,
   },
 }
