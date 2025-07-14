@@ -1,17 +1,8 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2017",
-    "module": "ES2022",
+    "target": "es2017",
+    "module": "es2022",
     "skipLibCheck": true,
-    "paths": {
-      "DualRenderer": [
-        "node/DualRenderer.tsx"
-      ]
-    }
   },
-  "include": [
-    "renderer/**/*",
-    "node/**/*"
-  ]
 }

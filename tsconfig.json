@@ -1,1 +1,19 @@
-tsconfig.dynamic.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es6",
+    "lib": [
+      "DOM"
+    ],
+    "module": "es6",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "removeComments": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

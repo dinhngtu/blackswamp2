@@ -27,9 +27,9 @@ schema.json: tsconfig.static.json renderer/Article.ts
 	@printf SCHEMA\\t$@\\n
 	@$(NODE) generate-schema.js $< Article $@
 
-render.mjs: rollup.static.config.mjs $(STATIC_SOURCES)
+render.mjs: node/render.ts tsconfig.static.json $(STATIC_SOURCES)
 	@printf JSS\\t$@\\n
-	@./node_modules/.bin/rollup -c $<
+	@./node_modules/.bin/esbuild $< --bundle --platform=node --format=esm --target=es2022 --packages=external --tsconfig=tsconfig.static.json --outfile=$@
 
 .SUFFIXES:
 
@@ -93,26 +93,11 @@ public/css/%.css: private/css/%.css
 
 css: $(CSS_OBJ)
 
-public/js/dynamic.js: rollup.dynamic.config.mjs $(DYNAMIC_SOURCES)
+public/js/dynamic.js: renderer/DynamicRenderer.tsx $(DYNAMIC_SOURCES)
 	@printf JSD\\t$@\\n
-	@./node_modules/.bin/rollup -c $<
-	@./node_modules/.bin/terser -o $@ -c -- $@
+	@./node_modules/.bin/esbuild $< --bundle --platform=browser --target=es6 --minify-whitespace --minify-syntax --outfile=$@
 
 js: public/js/dynamic.js
-
-# referenced deps
-
-rollup.static.config.mjs: tsconfig.static.json
-	@touch $@
-
-tsconfig.static.json: tsconfig.base.json
-	@touch $@
-
-rollup.dynamic.config.mjs: tsconfig.dynamic.json
-	@touch $@
-
-tsconfig.dynamic.json: tsconfig.base.json
-	@touch $@
 
 # clean
 
