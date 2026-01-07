@@ -11,7 +11,7 @@
     "linkedom": "^0.18.11",
     "marked": "^16.0.0",
     "minimist": "^1.2.7",
-    "preact": "^10.26.9",
+    "preact": "^10.28.2",
     "preact-render-to-string": "^6.5.13",
     "xss": "^1.0.14",
     "yaml": "^2.2.2"
